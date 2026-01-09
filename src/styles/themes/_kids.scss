@@ -1,0 +1,25 @@
+@use '../tokens' as vars;
+
+[data-theme='pastel-pink'] {
+  --background-body: #{vars.$pastel-pink-100};
+  --font-family-base: #{vars.$font-nunito};
+  --font-family-logo: #{vars.$font-baloo};
+}
+
+[data-theme='pastel-purple'] {
+  --background-body: #{vars.$pastel-purple-100};
+  --font-family-base: #{vars.$font-nunito};
+  --font-family-logo: #{vars.$font-baloo};
+}
+
+[data-theme='mint'] {
+  --background-body: #{vars.$mint-100};
+  --font-family-base: #{vars.$font-nunito};
+  --font-family-logo: #{vars.$font-baloo};
+}
+
+[data-theme='baby-blue'] {
+  --background-body: #{vars.$baby-blue-100};
+  --font-family-base: #{vars.$font-nunito};
+  --font-family-logo: #{vars.$font-baloo};
+}

@@ -1,0 +1,12 @@
+@use '../tokens' as vars;
+
+[data-theme='light'] {
+  --background-body: #{vars.$neutral-0};
+  --font-family-base: #{vars.$font-sora};
+  --text: #{vars.$neutral-400};
+}
+
+[data-theme='vscode'] {
+  --background-body: #{vars.$vscode-900};
+  --font-family-base: #{vars.$font-sora};
+}

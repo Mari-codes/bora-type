@@ -1,0 +1,13 @@
+@use '../tokens' as vars;
+
+:root {
+  --background-body: #{vars.$neutral-900};
+  --font-family-base: #{vars.$font-sora};
+  --text: #{vars.$neutral-400};
+}
+
+body {
+  background-color: var(--background-body);
+  font-family: var(--font-family-base);
+  color: var(--text);
+}

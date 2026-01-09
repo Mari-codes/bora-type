@@ -1,0 +1,16 @@
+@use '../tokens' as vars;
+
+h1 {
+  font-size: vars.$font-size-3xl;
+  font-weight: vars.$font-weight-bold;
+  line-height: vars.$line-height-tight;
+}
+
+h2 {
+  font-size: vars.$font-size-2xl;
+  font-weight: vars.$font-weight-semibold;
+}
+
+p {
+  font-size: vars.$font-size-md;
+}
