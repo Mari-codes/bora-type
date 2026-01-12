@@ -1,0 +1,13 @@
+import styles from './Logo.module.scss';
+import type { LogoProps } from './types';
+
+export const Logo = ({ mode }: LogoProps) => {
+  return (
+    <div className={`${styles.logo} ${styles[`logo--${mode}`]}`}>
+      <span className={styles.logo__brand}>BORA</span>
+      <span className={styles.logo__suffix}>
+        {mode === 'type' ? 'type' : 'kids'}
+      </span>
+    </div>
+  );
+};
