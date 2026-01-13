@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styles from './TypingGame.module.scss';
 import { TypingDisplay } from '../TypingDisplay';
 import type { TypingGameProps } from './types';
@@ -16,6 +16,8 @@ export const TypingGame = ({
   const [mistakes, setMistakes] = useState(0);
   const [totalKeysPressed, setTotalKeysPressed] = useState(0);
 
+  const [stats, setStats] = useState({ wpm: 0, accuracy: 100 });
+
   const inputRef = useRef<HTMLInputElement>(null);
   const startTimeRef = useRef<number | null>(null);
 
@@ -24,7 +26,6 @@ export const TypingGame = ({
 
     setHasStarted(true);
     startTimeRef.current = Date.now();
-
     onStart();
 
     requestAnimationFrame(() => {
@@ -47,28 +48,32 @@ export const TypingGame = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [hasStarted, isFinished]);
 
-  const stats = useMemo(() => {
-    if (!startTimeRef.current) {
-      return { wpm: 0, accuracy: 100 };
-    }
+  useEffect(() => {
+    if (!hasStarted || isFinished || !startTimeRef.current) return;
 
-    const elapsedMs = Date.now() - startTimeRef.current;
-    const elapsedMin = Math.max(elapsedMs, 1000) / 1000 / 60;
+    const interval = setInterval(() => {
+      const elapsedMs = Date.now() - startTimeRef.current!;
+      const elapsedMin = elapsedMs / 1000 / 60;
 
-    let correctChars = 0;
-    for (let i = 0; i < userInput.length; i++) {
-      if (userInput[i] === text[i]) correctChars++;
-    }
+      let correctChars = 0;
+      for (let i = 0; i < userInput.length; i++) {
+        if (userInput[i] === text[i]) correctChars++;
+      }
 
-    const wpm = Math.round(correctChars / 5 / elapsedMin);
+      const safeElapsedMin = Math.max(elapsedMin, 0.02);
 
-    const accuracy =
-      totalKeysPressed > 0
-        ? Math.round(((totalKeysPressed - mistakes) / totalKeysPressed) * 100)
-        : 100;
+      const wpm = Math.floor(correctChars / 5 / safeElapsedMin);
 
-    return { wpm, accuracy };
-  }, [userInput, text, mistakes, totalKeysPressed]);
+      const accuracy =
+        totalKeysPressed > 0
+          ? Math.floor(((totalKeysPressed - mistakes) / totalKeysPressed) * 100)
+          : 100;
+
+      setStats({ wpm, accuracy });
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, [hasStarted, isFinished, userInput, text, mistakes, totalKeysPressed]);
 
   useEffect(() => {
     onStatsUpdate({

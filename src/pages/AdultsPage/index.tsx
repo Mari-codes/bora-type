@@ -19,6 +19,7 @@ export const AdultsPage = () => {
   );
   const [duration, setDuration] = useState(30);
   const [refreshSeed, setRefreshSeed] = useState(0);
+  const [timerKey, setTimerKey] = useState(0);
 
   const [wpm, setWpm] = useState(0);
   const [accuracy, setAccuracy] = useState(100);
@@ -27,6 +28,8 @@ export const AdultsPage = () => {
 
   const handleNewText = useCallback(() => {
     setRefreshSeed((s) => s + 1);
+    setTimerKey((k) => k + 1);
+
     setWpm(0);
     setAccuracy(100);
     setIsActive(false);
@@ -108,6 +111,7 @@ export const AdultsPage = () => {
           <div className={styles['adults-page__stat']}>
             <span className={styles['adults-page__label']}>Time:</span>
             <Timer
+              key={timerKey}
               duration={duration}
               isActive={isActive && !isFinished}
               onTimeUp={handleTimeUp}

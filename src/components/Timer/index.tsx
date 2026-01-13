@@ -1,37 +1,52 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './Timer.module.scss';
 import type { TimerProps } from './types';
 
 const Timer = ({ duration, isActive, onTimeUp }: TimerProps) => {
   const [timeLeft, setTimeLeft] = useState(duration);
-  const prevDurationRef = useRef(duration);
+
+  const startTimeRef = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const finishedRef = useRef(false);
 
   useEffect(() => {
-    if (prevDurationRef.current !== duration) {
-      setTimeLeft(duration);
-      prevDurationRef.current = duration;
+    if (!isActive) return;
+
+    if (startTimeRef.current === null) {
+      startTimeRef.current = Date.now();
+      finishedRef.current = false;
     }
 
-    if (!isActive && (timeLeft === 0 || timeLeft === duration)) {
-      setTimeLeft(duration);
-    }
-  }, [duration, isActive, timeLeft]);
+    const tick = () => {
+      if (!startTimeRef.current) return;
+
+      const elapsedSeconds = (Date.now() - startTimeRef.current) / 1000;
+
+      const remaining = Math.max(0, duration - Math.floor(elapsedSeconds));
+
+      setTimeLeft(remaining);
+
+      if (remaining === 0 && !finishedRef.current) {
+        finishedRef.current = true;
+        onTimeUp();
+        return;
+      }
+
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [isActive, duration, onTimeUp]);
 
   useEffect(() => {
-    let interval: number | undefined;
-
-    if (isActive && timeLeft > 0) {
-      interval = window.setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
-      }, 1000);
-    }
-
-    if (timeLeft === 0) {
-      onTimeUp();
-    }
-
-    return () => window.clearInterval(interval);
-  }, [isActive, timeLeft, onTimeUp]);
+    setTimeLeft(duration);
+    startTimeRef.current = null;
+    finishedRef.current = false;
+  }, [duration]);
 
   return (
     <div className={styles['timer']}>
