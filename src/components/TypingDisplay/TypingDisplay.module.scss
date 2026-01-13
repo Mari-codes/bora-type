@@ -1,0 +1,27 @@
+@use '../../styles/tokens' as vars;
+
+.typing-display {
+  min-height: 144px;
+  width: 100%;
+
+  &__char {
+    color: var(--text);
+    border-left: 2px solid transparent;
+    font-size: vars.$font-size-2xl;
+
+    &--correct {
+      color: var(--text-correct);
+    }
+
+    &--incorrect {
+      color: var(--text-incorrect);
+      text-decoration: underline;
+    }
+
+    &--current {
+      background-color: var(--bg-char);
+      border-left: 2px solid #e2b714;
+      animation: blink 1s infinite;
+    }
+  }
+}
