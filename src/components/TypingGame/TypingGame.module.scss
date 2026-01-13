@@ -1,0 +1,46 @@
+.typing-game {
+  width: 100%;
+  cursor: text;
+  position: relative;
+
+  & > :not(input) {
+    filter: blur(0);
+    opacity: 1;
+    transition:
+      filter 0.3s ease,
+      opacity 0.3s ease;
+  }
+
+  &--unfocused {
+    & > :not(input):not(.typing-game__focus-notice) {
+      filter: blur(10px);
+      opacity: 0.4;
+      transition: none;
+    }
+  }
+
+  &__focus-notice {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    font-size: 1.5rem;
+    color: #e2b714;
+    font-weight: bold;
+    pointer-events: none;
+    text-align: center;
+    white-space: nowrap;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+
+    transition: opacity 0.2s ease;
+  }
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+    font-size: 16px;
+  }
+}
