@@ -1,0 +1,13 @@
+//@use '../../styles/tokens' as vars;
+
+.timer {
+  color: var(--accent-color);
+
+  &__value {
+    font-weight: bold;
+
+    &--low {
+      color: var(--timer-low);
+    }
+  }
+}
