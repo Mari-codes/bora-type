@@ -1,0 +1,52 @@
+@use '../../styles/tokens' as vars;
+
+.option-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  //border: 1px solid #333;
+
+  &__label {
+    color: #858585;
+    font-size: vars.$font-size-sm;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 12px;
+  }
+}
+
+.option-btn {
+  background: transparent;
+  color: #646669;
+  padding: 4px 0;
+  cursor: pointer;
+  font-size: vars.$font-size-sm;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  text-transform: capitalize;
+  position: relative;
+
+  &:hover {
+    color: #d1d0c5;
+  }
+
+  &--active {
+    color: #e2b714;
+    font-weight: bold;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #e2b714;
+      border-radius: 2px;
+    }
+  }
+}
