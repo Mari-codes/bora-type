@@ -1,0 +1,146 @@
+@use '../../styles/tokens' as vars;
+
+.adults-page {
+  padding: 30px 100px;
+  overflow: hidden;
+  height: 100vh;
+  height: 100svh;
+  &__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px 0 50px;
+  }
+
+  &__config,
+  &__stats {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    transition: all 0.3s ease;
+
+    &.active {
+      opacity: 1;
+    }
+
+    &:not(.active) {
+      opacity: 0.8;
+    }
+  }
+
+  &__config > *,
+  &__stat {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    &:not(:last-child) {
+      margin-right: 16px;
+      padding-right: 16px;
+
+      &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 24px;
+        width: 1px;
+        background-color: #646669;
+        opacity: 0.4;
+        border-radius: 2px;
+      }
+    }
+  }
+
+  &__label {
+    color: #858585;
+    font-size: vars.$font-size-sm;
+    text-transform: uppercase;
+    margin-right: 12px;
+    line-height: 1;
+  }
+
+  &__value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #d1d0c5;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  &__stat--timer {
+    font-size: vars.$font-size-xl;
+    font-weight: bold;
+    color: #e2b714;
+  }
+
+  &__main {
+    min-height: 300px;
+    width: 100%;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 8px;
+  }
+
+  &__btn-refresh {
+    background: transparent;
+    border: none;
+    color: #7d7d7d;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+    outline: none;
+
+    &:hover {
+      color: #d1d0c5;
+      background-color: rgba(255, 255, 255, 0.05);
+      transform: rotate(-15deg);
+    }
+
+    &:focus-visible {
+      color: #e2b714;
+    }
+  }
+
+  &__hint {
+    font-size: 11px;
+    color: #646669;
+    text-transform: lowercase;
+    transition: opacity 0.2s;
+    pointer-events: none;
+
+    opacity: 0.8;
+
+    kbd {
+      background: #2c2e31;
+      color: #d1d0c5;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: inherit;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+  &__results {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.6);
+  }
+}
