@@ -4,6 +4,8 @@ export interface TypingGameProps {
   isFinished: boolean;
   onStatsUpdate: (stats: {
     wpm: number;
+    correct: number;
+    mistakes: number;
     accuracy: number;
     active: boolean;
   }) => void;
