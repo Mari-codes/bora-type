@@ -8,8 +8,10 @@
   &__toolbar {
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    padding: 60px 0 50px;
+    padding: 50px 0;
+    gap: 10px;
   }
 
   &__config,

@@ -1,5 +1,11 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import { RotateCcw, Trophy, Target, CheckCircle2 } from 'lucide-react';
+import {
+  RotateCcw,
+  Trophy,
+  Target,
+  CheckCircle2,
+  Infinity as InfinityIcon,
+} from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { adultPassages } from '../../data/adultContent';
 import styles from './AdultsPage.module.scss';
@@ -18,7 +24,7 @@ export const AdultsPage = () => {
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>(
     'easy',
   );
-  const [duration, setDuration] = useState(30);
+  const [duration, setDuration] = useState<number | 'inf'>(30);
   const [refreshSeed, setRefreshSeed] = useState(0);
   const [timerKey, setTimerKey] = useState(0);
 
@@ -32,32 +38,10 @@ export const AdultsPage = () => {
   const [isNewRecord, setIsNewRecord] = useState(false);
   const [isFirstTime, setIsFirstTime] = useState(false);
 
-  const modalContent = useMemo(() => {
-    if (!isFinished) return null;
-
-    if (isFirstTime) {
-      return {
-        title: 'Baseline Established!',
-        description:
-          'You’ve set the bar. Now the real challenge begins—time to beat it.',
-        icon: <Target size={60} color="#3b82f6" />,
-      };
-    }
-
-    if (isNewRecord) {
-      return {
-        title: 'High Score Smashed!',
-        description: `You’re getting faster. That was incredible typing.`,
-        icon: <Trophy size={60} color="#ffcf00" />,
-      };
-    }
-
-    return {
-      title: 'Test Completed!',
-      description: 'Solid run. Keep pushing to beat your high score.',
-      icon: <CheckCircle2 size={60} color="#9ca3af" />,
-    };
-  }, [isFinished, isNewRecord, isFirstTime]);
+  const timeOptions = useMemo(
+    () => [15, 30, 60, 120, <InfinityIcon key="inf" size={20} />],
+    [],
+  );
 
   const handleNewText = useCallback(() => {
     setRefreshSeed((s) => s + 1);
@@ -72,18 +56,12 @@ export const AdultsPage = () => {
     setIsFirstTime(false);
   }, []);
 
-  const handleCategoryChange = (val: string) => {
-    setCategory(val as Category);
-    handleNewText();
-  };
-
-  const handleDifficultyChange = (val: string) => {
-    setDifficulty(val as any);
-    handleNewText();
-  };
-
-  const handleDurationChange = (val: string | number) => {
-    setDuration(Number(val));
+  const handleDurationChange = (val: any) => {
+    if (typeof val === 'number') {
+      setDuration(val);
+    } else {
+      setDuration('inf');
+    }
     handleNewText();
   };
 
@@ -103,58 +81,61 @@ export const AdultsPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleNewText]);
 
-  const handleStatsUpdate = useCallback(
-    (stats: {
-      wpm: number;
-      accuracy: number;
-      active: boolean;
-      correct: number;
-      mistakes: number;
-    }) => {
-      setWpm(stats.wpm);
-      setAccuracy(stats.accuracy);
-      setCorrect(stats.correct);
-      setMistakes(stats.mistakes);
-    },
-    [],
-  );
-
-  const handleGameStart = useCallback(() => {
-    setIsActive(true);
+  const handleStatsUpdate = useCallback((stats: any) => {
+    setWpm(stats.wpm);
+    setAccuracy(stats.accuracy);
+    setCorrect(stats.correct);
+    setMistakes(stats.mistakes);
   }, []);
 
-  const handleTimeUp = useCallback(() => {
-    setIsActive(false);
-    setIsFinished(true);
+  const handleGameStart = useCallback(() => setIsActive(true), []);
 
+  const handleTimeUp = useCallback(() => {
+    if (isFinished) return;
     const wasFirstTime = personalBest === 0;
     const wasRecord = updatePersonalBest(wpm);
 
-    if (wasFirstTime) {
-      setIsFirstTime(true);
-    } else if (wasRecord) {
-      setIsNewRecord(true);
-
+    if (!wasFirstTime && wasRecord) {
       const config = {
         particleCount: 250,
-        spread: 70,
-        gravity: 1.2,
+        spread: 60,
+        gravity: 2.5,
         scalar: 0.8,
         colors: ['#e2b714', '#ffffff', '#646669'],
         zIndex: 9999,
+        startVelocity: 45,
       };
-
-      confetti({
-        ...config,
-        origin: { x: 0.2, y: -0.1 },
-      });
-
-      confetti({
-        ...config,
-        origin: { x: 0.8, y: -0.1 },
-      });
+      confetti({ ...config, origin: { x: 0.2, y: -0.1 } });
+      confetti({ ...config, origin: { x: 0.8, y: -0.1 } });
     }
-  }, [wpm, personalBest, updatePersonalBest]);
+
+    if (wasFirstTime) setIsFirstTime(true);
+    else if (wasRecord) setIsNewRecord(true);
+
+    setIsActive(false);
+    setIsFinished(true);
+  }, [wpm, personalBest, updatePersonalBest, isFinished]);
+
+  const modalContent = useMemo(() => {
+    if (!isFinished) return null;
+    if (isFirstTime)
+      return {
+        title: 'Baseline Established!',
+        description: 'You’ve set the bar.',
+        icon: <Target size={60} color="#3b82f6" />,
+      };
+    if (isNewRecord)
+      return {
+        title: 'High Score Smashed!',
+        description: `Faster than ever!`,
+        icon: <Trophy size={60} color="#ffcf00" />,
+      };
+    return {
+      title: 'Test Completed!',
+      description: 'Solid run.',
+      icon: <CheckCircle2 size={60} color="#9ca3af" />,
+    };
+  }, [isFinished, isNewRecord, isFirstTime]);
 
   return (
     <div className={styles['adults-page']}>
@@ -174,11 +155,12 @@ export const AdultsPage = () => {
               {accuracy}%
             </strong>
           </div>
+
           <div className={styles['adults-page__stat']}>
             <span className={styles['adults-page__label']}>Time:</span>
             <Timer
               key={timerKey}
-              duration={duration}
+              duration={duration === 'inf' ? 0 : duration}
               isActive={isActive && !isFinished}
               onTimeUp={handleTimeUp}
             />
@@ -190,18 +172,24 @@ export const AdultsPage = () => {
             label="Mode:"
             options={['standard', 'quotes', 'code', 'lyrics']}
             currentValue={category}
-            onChange={handleCategoryChange}
+            onChange={(v) => {
+              setCategory(v as Category);
+              handleNewText();
+            }}
           />
           <GameOption
             label="Difficulty:"
             options={['easy', 'medium', 'hard']}
             currentValue={difficulty}
-            onChange={handleDifficultyChange}
+            onChange={(v) => {
+              setDifficulty(v as any);
+              handleNewText();
+            }}
           />
           <GameOption
             label="Time:"
-            options={[15, 30, 60, 120]}
-            currentValue={duration}
+            options={timeOptions}
+            currentValue={duration === 'inf' ? timeOptions[4] : duration}
             onChange={handleDurationChange}
           />
         </nav>

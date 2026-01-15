@@ -3,14 +3,18 @@ import styles from './Timer.module.scss';
 import type { TimerProps } from './types';
 
 const Timer = ({ duration, isActive, onTimeUp }: TimerProps) => {
-  const [timeLeft, setTimeLeft] = useState(duration);
+  const isInfinite = duration === 0 || (duration as any) === 'inf';
+  const [timeLeft, setTimeLeft] = useState(isInfinite ? 0 : duration);
 
   const startTimeRef = useRef<number | null>(null);
   const rafRef = useRef<number | null>(null);
   const finishedRef = useRef(false);
 
   useEffect(() => {
-    if (!isActive) return;
+    if (!isActive) {
+      startTimeRef.current = null;
+      return;
+    }
 
     if (startTimeRef.current === null) {
       startTimeRef.current = Date.now();
@@ -20,16 +24,21 @@ const Timer = ({ duration, isActive, onTimeUp }: TimerProps) => {
     const tick = () => {
       if (!startTimeRef.current) return;
 
-      const elapsedSeconds = (Date.now() - startTimeRef.current) / 1000;
+      const elapsedSeconds = Math.floor(
+        (Date.now() - startTimeRef.current) / 1000,
+      );
 
-      const remaining = Math.max(0, duration - Math.floor(elapsedSeconds));
+      if (isInfinite) {
+        setTimeLeft(elapsedSeconds);
+      } else {
+        const remaining = Math.max(0, duration - elapsedSeconds);
+        setTimeLeft(remaining);
 
-      setTimeLeft(remaining);
-
-      if (remaining === 0 && !finishedRef.current) {
-        finishedRef.current = true;
-        onTimeUp();
-        return;
+        if (remaining === 0 && !finishedRef.current) {
+          finishedRef.current = true;
+          onTimeUp();
+          return;
+        }
       }
 
       rafRef.current = requestAnimationFrame(tick);
@@ -40,19 +49,21 @@ const Timer = ({ duration, isActive, onTimeUp }: TimerProps) => {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [isActive, duration, onTimeUp]);
+  }, [isActive, duration, onTimeUp, isInfinite]);
 
   useEffect(() => {
-    setTimeLeft(duration);
+    setTimeLeft(isInfinite ? 0 : duration);
     startTimeRef.current = null;
     finishedRef.current = false;
-  }, [duration]);
+  }, [duration, isInfinite]);
 
   return (
     <div className={styles['timer']}>
       <span
         className={`${styles['timer__value']} ${
-          timeLeft <= 5 && isActive ? styles['timer__value--low'] : ''
+          !isInfinite && timeLeft <= 5 && isActive
+            ? styles['timer__value--low']
+            : ''
         }`}
       >
         {timeLeft}s
