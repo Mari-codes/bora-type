@@ -18,10 +18,10 @@
   &__stats {
     display: flex;
     align-items: center;
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--bg-toolbar);
     padding: 8px 16px;
     border-radius: 8px;
-    border: 1px solid #333;
+    border: 1px solid var(--border-toolbar);
     transition: all 0.3s ease;
 
     &.active {
@@ -51,15 +51,14 @@
         transform: translateY(-50%);
         height: 24px;
         width: 1px;
-        background-color: #646669;
-        opacity: 0.4;
+        background-color: var(--divider-ui);
         border-radius: 2px;
       }
     }
   }
 
   &__label {
-    color: #858585;
+    color: var(--label);
     font-size: vars.$font-size-sm;
     text-transform: uppercase;
     margin-right: 12px;
@@ -69,16 +68,10 @@
   &__value {
     font-size: 24px;
     font-weight: bold;
-    color: #d1d0c5;
+    color: var(--value);
     line-height: 1;
     display: flex;
     align-items: center;
-  }
-
-  &__stat--timer {
-    font-size: vars.$font-size-xl;
-    font-weight: bold;
-    color: #e2b714;
   }
 
   &__main {
@@ -98,7 +91,7 @@
   &__btn-refresh {
     background: transparent;
     border: none;
-    color: #7d7d7d;
+    color: var(--btn-refresh);
     cursor: pointer;
     padding: 8px;
     border-radius: 4px;
@@ -106,19 +99,18 @@
     outline: none;
 
     &:hover {
-      color: #d1d0c5;
-      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--option-hover);
       transform: rotate(-15deg);
     }
 
     &:focus-visible {
-      color: #e2b714;
+      color: var(--accent);
     }
   }
 
   &__hint {
     font-size: 11px;
-    color: #646669;
+    color: var(--text);
     text-transform: lowercase;
     transition: opacity 0.2s;
     pointer-events: none;
@@ -126,23 +118,12 @@
     opacity: 0.8;
 
     kbd {
-      background: #2c2e31;
-      color: #d1d0c5;
+      background: var(--bg-kbd);
+      color: var(--text-secondary);
       padding: 2px 5px;
       border-radius: 3px;
       font-family: inherit;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--border-kbd);
     }
-  }
-  &__results {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(0, 0, 0, 0.6);
   }
 }

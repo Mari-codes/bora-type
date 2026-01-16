@@ -8,13 +8,14 @@
   &__brand {
     font-size: vars.$font-size-1-5xl;
     font-weight: vars.$font-weight-bold;
-    color: vars.$neutral-0;
+    color: var(--brand);
     letter-spacing: -1px;
     line-height: vars.$line-height-tight;
   }
 
   &__suffix {
     display: inline-block;
+    color: var(--suffix);
     line-height: vars.$line-height-tight;
     margin-left: vars.$spacing-75;
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);

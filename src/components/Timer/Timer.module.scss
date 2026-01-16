@@ -6,7 +6,7 @@
   &__value {
     font-weight: bold;
     font-size: 24px;
-    color: #e2b714;
+    color: var(--accent-color);
 
     &--low {
       color: var(--timer-low);

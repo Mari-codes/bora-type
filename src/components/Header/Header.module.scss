@@ -27,15 +27,19 @@
   }
 
   &__icon {
-    color: #e2b714;
+    color: var(--header-pb-icon);
     display: flex;
     align-items: center;
+  }
+
+  &__label {
+    color: var(--header-pb);
   }
 
   &__valueWrapper {
     display: flex;
     align-items: baseline;
-    color: #d1d0c5;
+    color: var(--header-pb-value);
     gap: 4px;
   }
 

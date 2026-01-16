@@ -20,7 +20,7 @@
 
     &--current {
       background-color: var(--bg-char);
-      border-left: 2px solid #e2b714;
+      border-left: 2px solid var(--accent-color);
       animation: blink 1s infinite;
     }
   }

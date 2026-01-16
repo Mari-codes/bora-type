@@ -1,5 +1,7 @@
+import { AdultsPage } from './pages/AdultsPage';
+
 function App() {
-  return <h1>Teste</h1>;
+  return <AdultsPage />;
 }
 
 export default App;
