@@ -19,7 +19,6 @@ import { ResultsModal } from '../../components/ResultsModal';
 
 export const AdultsPage = () => {
   const { personalBest, updatePersonalBest } = usePersonalBest('type');
-
   const [category, setCategory] = useState<Category>('standard');
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>(
     'easy',
@@ -27,14 +26,12 @@ export const AdultsPage = () => {
   const [duration, setDuration] = useState<number | 'inf'>(30);
   const [refreshSeed, setRefreshSeed] = useState(0);
   const [timerKey, setTimerKey] = useState(0);
-
   const [wpm, setWpm] = useState(0);
   const [accuracy, setAccuracy] = useState(100);
   const [isActive, setIsActive] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [correct, setCorrect] = useState(0);
   const [mistakes, setMistakes] = useState(0);
-
   const [isNewRecord, setIsNewRecord] = useState(false);
   const [isFirstTime, setIsFirstTime] = useState(false);
 
@@ -81,6 +78,52 @@ export const AdultsPage = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleNewText]);
 
+  useEffect(() => {
+    const getGameInput = () =>
+      document.querySelector('input[type="text"]') as HTMLInputElement;
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'data-theme') {
+          handleNewText();
+          setTimeout(() => getGameInput()?.focus(), 50);
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Tab' || e.ctrlKey || e.metaKey || isFinished) return;
+
+      const activeEl = document.activeElement;
+      const input = getGameInput();
+
+      if (input && activeEl !== input) {
+        input.focus();
+      }
+    };
+
+    const recoverFocus = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest('button') && !target.closest('select')) {
+        getGameInput()?.focus();
+      }
+    };
+
+    window.addEventListener('keydown', handleGlobalKeyDown, true);
+    window.addEventListener('click', recoverFocus);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('keydown', handleGlobalKeyDown, true);
+      window.removeEventListener('click', recoverFocus);
+    };
+  }, [handleNewText, isFinished]);
+
   const handleStatsUpdate = useCallback((stats: any) => {
     setWpm(stats.wpm);
     setAccuracy(stats.accuracy);
@@ -122,18 +165,18 @@ export const AdultsPage = () => {
       return {
         title: 'Baseline Established!',
         description: 'You’ve set the bar.',
-        icon: <Target size={60} color="#3b82f6" />,
+        icon: <Target size={60} color="#6e96bd" />,
       };
     if (isNewRecord)
       return {
         title: 'High Score Smashed!',
         description: `Faster than ever!`,
-        icon: <Trophy size={60} color="#ffcf00" />,
+        icon: <Trophy size={60} color="#e2b714" />,
       };
     return {
       title: 'Test Completed!',
       description: 'Solid run.',
-      icon: <CheckCircle2 size={60} color="#9ca3af" />,
+      icon: <CheckCircle2 size={60} color="#646669" />,
     };
   }, [isFinished, isNewRecord, isFirstTime]);
 

@@ -20,6 +20,10 @@ export const TypingGame = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const startTimeRef = useRef<number | null>(null);
 
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
   const wakeUpGame = () => {
     if (hasStarted || isFinished) return;
 
@@ -27,19 +31,29 @@ export const TypingGame = ({
     startTimeRef.current = Date.now();
     onStart();
 
-    requestAnimationFrame(() => {
+    setTimeout(() => {
       inputRef.current?.focus();
-    });
+    }, 10);
   };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (isFinished) return;
-      if (e.key === 'Tab' || e.ctrlKey || e.metaKey) return;
+
+      if (
+        e.key === 'Tab' ||
+        e.ctrlKey ||
+        e.metaKey ||
+        e.key === 'Alt' ||
+        e.key === 'Shift'
+      ) {
+        return;
+      }
 
       if (!hasStarted) {
         e.preventDefault();
         wakeUpGame();
+        setUserInput('');
       }
     };
 
@@ -49,35 +63,23 @@ export const TypingGame = ({
 
   const correctChars = useMemo(() => {
     let count = 0;
-
     for (let i = 0; i < userInput.length; i++) {
       const expected = text[i];
       const typed = userInput[i];
-
-      if (!expected || !/[a-zA-Z]/.test(expected)) continue;
-
-      if (typed === expected) {
-        count++;
-      }
+      if (!expected) continue;
+      if (typed === expected) count++;
     }
-
     return count;
   }, [userInput, text]);
 
   const mistakes = useMemo(() => {
     let count = 0;
-
     for (let i = 0; i < userInput.length; i++) {
       const expected = text[i];
       const typed = userInput[i];
-
-      if (!expected || !/[a-zA-Z]/.test(expected)) continue;
-
-      if (typed !== expected) {
-        count++;
-      }
+      if (!expected) continue;
+      if (typed !== expected) count++;
     }
-
     return count;
   }, [userInput, text]);
 
@@ -127,9 +129,8 @@ export const TypingGame = ({
       const expected = text[idx];
       const typed = value[idx];
 
-      if (expected && /[a-zA-Z]/.test(expected)) {
+      if (expected) {
         setTotalKeystrokes((k) => k + 1);
-
         if (typed !== expected) {
           setTotalErrors((e) => e + 1);
         }
@@ -154,7 +155,7 @@ export const TypingGame = ({
     >
       {!hasStarted && !isFinished && (
         <div className={styles['typing-game__focus-notice']}>
-          CLICK OR ANY KEY TO START
+          click or type to start
         </div>
       )}
 
@@ -162,7 +163,7 @@ export const TypingGame = ({
         ref={inputRef}
         type="text"
         className={styles['typing-game__input']}
-        value={hasStarted ? userInput : ''}
+        value={userInput}
         onChange={handleInputChange}
         autoComplete="off"
         spellCheck={false}
