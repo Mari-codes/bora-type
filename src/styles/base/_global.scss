@@ -4,6 +4,39 @@
   --background-body: #{vars.$neutral-900};
   --font-family-base: #{vars.$font-sora};
   --text: #{vars.$neutral-400};
+  --text-secondary: #{vars.$neutral-100};
+  --label: #{vars.$neutral-450};
+  --sub-label: #{vars.$neutral-600};
+  --value: #{vars.$neutral-100};
+  --option-hover: #{vars.$neutral-100};
+  --brand: #{vars.$neutral-0};
+  --suffix: #{vars.$neutral-400};
+  --header-pb: #{vars.$neutral-400};
+  --header-pb-value: #{vars.$neutral-100};
+  --header-pb-icon: #{vars.$yellow-600};
+  --bg-toolbar: #{vars.$black-a20};
+  --bg-item-hover: #{vars.$white-a05};
+  --bg-item-active: #{vars.$white-a08};
+  --shadow-dropdown: #{vars.$black-a40};
+  --dropddown-selected: #{vars.$white-a03};
+  --text-correct: #{vars.$green-500};
+  --text-incorrect: #{vars.$red-500};
+  --timer-low: #{vars.$red-500};
+  --bg-char: rgba(100, 102, 105, 0.2);
+  --bg-kbd: #{vars.$neutral-850};
+  --border: #{vars.$neutral-400};
+  --border-toolbar: #{vars.$neutral-700};
+  --border-kbd: #{vars.$white-a10};
+  --accent-color: #{vars.$yellow-600};
+  --divider-ui: #{vars.$gray-a40};
+  --btn-refresh: #{vars.$neutral-550};
+  --text-unfocused: #{vars.$neutral-600};
+  --text-unfocused-hover: #{vars.$neutral-100};
+  --shadow-unfocused: #{vars.$black-a50};
+  --glow-unfocused: #{vars.$bege-a30};
+  --shadow-popover: #{vars.$black-a40};
+  --text-ghost: #{vars.$neutral-600};
+  --text-on-accent: #{vars.$neutral-850};
 }
 
 body {
