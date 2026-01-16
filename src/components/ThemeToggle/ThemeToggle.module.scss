@@ -1,0 +1,109 @@
+.themeToggle {
+  position: relative;
+  display: inline-block;
+
+  &__icon {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: var(--accent-color);
+    stroke: currentColor;
+
+    &--rotated {
+      transform: rotate(15deg) scale(1.1);
+    }
+  }
+
+  &__trigger {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 4px;
+    color: var(--text);
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: var(--text-secondary);
+    }
+
+    &--active {
+      color: var(--text-secondary);
+
+      background: var(--bg-item-active);
+    }
+  }
+
+  &__currentName {
+    font-size: 0.85rem;
+
+    text-transform: lowercase;
+
+    font-weight: 500;
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background-color: var(--background-body);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px;
+    min-width: 150px;
+    z-index: 100;
+    box-shadow: 0 10px 30px var(--shadow-dropdown);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    animation: slideIn 0.25s ease-out;
+  }
+
+  &__option {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    padding: 8px 12px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    text-transform: lowercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: var(--bg-item-hover);
+      color: var(--text-secondary);
+    }
+
+    &--selected {
+      color: var(--accent-color) !important;
+      font-weight: 600;
+      background: var(--dropddown-selected);
+    }
+  }
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent-color);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
