@@ -46,6 +46,10 @@
     gap: 4px;
   }
 
+  &__value {
+    font-weight: 800;
+  }
+
   &--kids {
     .header__info {
       flex-direction: column;
@@ -57,6 +61,11 @@
 
     .header__valueWrapper {
       text-shadow: 1px 1px 0px black;
+      -webkit-text-stroke: 0.4px black;
+    }
+
+    .header__value {
+      font-size: vars.$font-size-md;
     }
 
     .header__icon {
@@ -84,7 +93,7 @@
     }
 
     &__valueWrapper {
-      font-size: 14px;
+      font-size: vars.$font-size-sm;
     }
 
     &__info {
@@ -99,10 +108,6 @@
 
 @media (max-width: 700px) {
   .header {
-    &__valueWrapper {
-      font-size: 12px;
-    }
-
     &--kids {
       .header__info {
         margin-right: 10px;
