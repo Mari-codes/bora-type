@@ -36,6 +36,7 @@
       font-weight: vars.$font-weight-bold;
       font-size: vars.$font-size-xl;
       transform: rotate(-6deg) translateY(-2px);
+      -webkit-text-stroke: 0.4px black;
 
       animation: bounceIn 0.5s ease;
     }
