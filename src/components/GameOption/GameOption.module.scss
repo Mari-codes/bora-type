@@ -78,11 +78,6 @@
       font-size: 10px;
       padding: 6px 10px;
     }
-
-    @media (max-width: 400px) {
-      font-size: 9px;
-      padding: 6px 8px;
-    }
   }
 
   &__icon {
@@ -112,7 +107,7 @@
     padding: 8px 12px;
     background: transparent;
     font-size: vars.$font-size-sm;
-    font-weight: 600;
+    font-weight: 800;
     width: 100%;
     color: var(--btn-color-sub);
     cursor: pointer;
@@ -131,11 +126,6 @@
     @media (max-width: 480px) {
       font-size: 10px;
       padding: 6px 10px;
-    }
-
-    @media (max-width: 400px) {
-      font-size: 9px;
-      padding: 4px 8px;
     }
   }
 }
