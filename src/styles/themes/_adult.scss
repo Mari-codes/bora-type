@@ -25,10 +25,8 @@
   --text-incorrect: #{vars.$red-500};
   --timer-low: #{vars.$red-500};
   --bg-char: #{vars.$black-a05};
-  --bg-kbd: #{vars.$neutral-0};
   --border: #{vars.$neutral-100};
   --border-toolbar: #{vars.$neutral-100};
-  --border-kbd: #{vars.$neutral-100};
   --accent-color: #{vars.$yellow-600};
   --divider-ui: #{vars.$black-a10};
   --btn-refresh: #{vars.$neutral-400};
@@ -39,6 +37,9 @@
   --shadow-popover: #{vars.$black-a10};
   --text-ghost: #{vars.$neutral-400};
   --text-on-accent: #{vars.$neutral-900};
+  --btn-color-active: #{vars.$yellow-600};
+  --btn-color-sub: #{vars.$neutral-600};
+  --btn-color-hover: #{vars.$neutral-900};
 }
 
 [data-theme='sepia'] {
@@ -66,9 +67,7 @@
   --text-incorrect: #{vars.$red-500};
   --timer-low: #{vars.$red-500};
   --bg-char: #{vars.$black-a08};
-  --bg-kbd: #{vars.$neutral-100};
   --border-toolbar: #{vars.$sepia-ink-400};
-  --border-kbd: #{vars.$sepia-ink-400};
   --divider-ui: #{vars.$sepia-ink-400};
   --btn-refresh: #{vars.$sepia-ink-600};
   --text-hover: #{vars.$neutral-900};
@@ -79,6 +78,9 @@
   --shadow-popover: #{vars.$black-a40};
   --text-ghost: #{vars.$sepia-ink-400};
   --text-on-accent: #{vars.$neutral-100};
+  --btn-color-active: #{vars.$neutral-900};
+  --btn-color-sub: #{vars.$sepia-ink-600};
+  --btn-color-hover: #{vars.$neutral-900};
 }
 
 [data-theme='vs code'] {
@@ -104,10 +106,8 @@
   --text-incorrect: #{vars.$red-500};
   --timer-low: #{vars.$red-500};
   --bg-char: #{vars.$cyan-a10};
-  --bg-kbd: #{vars.$vscode-sidebar};
   --border: #{vars.$vscode-border};
   --border-toolbar: #{vars.$vscode-border};
-  --border-kbd: #{vars.$white-a05};
   --accent-color: #{vars.$vscode-blue};
   --divider-ui: #{vars.$vscode-border};
   --btn-refresh: #{vars.$neutral-550};
@@ -118,6 +118,9 @@
   --shadow-popover: #{vars.$black-a60};
   --text-ghost: #{vars.$neutral-600};
   --text-on-accent: #{vars.$neutral-0};
+  --btn-color-active: #{vars.$vscode-blue};
+  --btn-color-sub: #{vars.$neutral-600};
+  --btn-color-hover: #{vars.$vscode-cyan};
 }
 
 [data-theme='sakura'] {
@@ -143,10 +146,8 @@
   --text-incorrect: #{vars.$red-500};
   --timer-low: #{vars.$red-500};
   --bg-char: #{vars.$black-a05};
-  --bg-kbd: #{vars.$sakura-light-kbd};
   --border: #{vars.$black-a10};
   --border-toolbar: #{vars.$black-a10};
-  --border-kbd: #{vars.$black-a05};
   --accent-color: #{vars.$sakura-light-accent};
   --divider-ui: #{vars.$black-a08};
   --btn-refresh: #{vars.$sakura-light-text};
@@ -158,4 +159,7 @@
   --shadow-popover: #{vars.$black-a20};
   --text-ghost: #{vars.$sakura-light-text};
   --text-on-accent: #{vars.$neutral-0};
+  --btn-color-active: #{vars.$sakura-light-accent};
+  --btn-color-sub: #{vars.$sakura-light-text};
+  --btn-color-hover: #{vars.$sakura-light-main};
 }

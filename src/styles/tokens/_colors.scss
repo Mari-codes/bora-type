@@ -62,3 +62,73 @@ $white-a03: rgba(255, 255, 255, 0.03);
 $bege-a30: rgba(209, 208, 197, 0.3);
 $cyan-a10: rgba(79, 193, 255, 0.1);
 $blue-a20: rgba(0, 122, 204, 0.2);
+
+$candy-yellow: #ffd93d;
+$candy-purple: #a29bfe;
+$candy-pink: #ff6b6b;
+$candy-green: #6bcb77;
+$candy-blue: #4d96ff;
+$candy-black: #222222;
+$candy-white: $neutral-0;
+$candy-bg: #f9f9f9;
+
+$candy-shadow: 4px 4px 0px $candy-black;
+$candy-shadow-lg: 8px 8px 0px $candy-black;
+$candy-black-a10: rgba(34, 34, 34, 0.1);
+$candy-hover-bg: rgba(77, 150, 255, 0.1);
+$candy-active-bg: rgba(77, 150, 255, 0.2);
+$candy-dropdown-selected: rgba(77, 150, 255, 0.15);
+$candy-black-a40: rgba(34, 34, 34, 0.4);
+$candy-black-a60: $black-a40;
+
+$minecraft-gray-light: #c6c6c6;
+$minecraft-gray-dark: $vscode-bg;
+$minecraft-green-forest: #4d7e31;
+$minecraft-green-grass: #52ad32;
+$minecraft-gray-stone: #373737;
+$minecraft-white: $neutral-0;
+$minecraft-gold: #ffd700;
+$minecraft-green-success: #32a421;
+$minecraft-red-danger: #b3312c;
+$minecraft-black: #000000;
+$minecraft-gray-muted: #8b8b8b;
+$minecraft-brown: #866043;
+
+$minecraft-green-hover: rgba(82, 173, 50, 0.2);
+$minecraft-green-active: rgba(82, 173, 50, 0.3);
+$minecraft-black-a40: $black-a40;
+$minecraft-black-a60: $black-a60;
+$minecraft-bg-char: $black-a10;
+
+$watermelon-bg: #f3fff6;
+$watermelon-darker: #1f2d24;
+$watermelon-dark: #2f3e35;
+$watermelon-green: #3cb371;
+$watermelon-red: #ff4f5e;
+$watermelon-white: $neutral-0;
+$watermelon-red-light: #ff8a8a;
+$watermelon-accent: #2ecc71;
+$watermelon-pink: #ff6f7d;
+
+$watermelon-bg-char: $black-a08;
+$watermelon-bg-item-hover: rgba(60, 179, 113, 0.2);
+$watermelon-bg-item-active: rgba(60, 179, 113, 0.35);
+$watermelon-dropdown-selected: rgba(255, 79, 94, 0.25);
+$watermelon-text-unfocused: rgba(31, 45, 36, 0.4);
+$watermelon-modal-overlay-bg: $black-a40;
+
+$kitty-bg: #fff5f8;
+$kitty-black: #2b2b2b;
+$kitty-dark-gray: #444444;
+$kitty-white: #ffffff;
+$kitty-pink: #ff8fb1;
+$kitty-red: #ff4d6d;
+$kitty-light-pink: #ff5a7a;
+$kitty-green: #6fcf97;
+
+$kitty-bg-char: $black-a08;
+$kitty-bg-item-hover: rgba(255, 143, 177, 0.2);
+$kitty-bg-item-active: rgba(255, 143, 177, 0.35);
+$kitty-dropdown-selected: rgba(255, 143, 177, 0.25);
+$kitty-text-unfocused: rgba(43, 43, 43, 0.4);
+$kitty-modal-overlay-bg: $black-a40;
