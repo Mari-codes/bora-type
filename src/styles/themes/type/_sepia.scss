@@ -1,0 +1,42 @@
+@use '../../tokens' as vars;
+
+[data-theme='sepia'] {
+  --background-body: #{vars.$neutral-100};
+  --font-family-base: #{vars.$font-sora};
+  --text: #{vars.$sepia-ink-600};
+  --text-secondary: #{vars.$neutral-900};
+  --label: #{vars.$neutral-900};
+  --sub-label: #{vars.$sepia-ink-600};
+  --value: #{vars.$neutral-900};
+  --option-hover: #{vars.$neutral-900};
+  --brand: #{vars.$neutral-900};
+  --suffix: #{vars.$sepia-ink-600};
+  --header-pb: #{vars.$sepia-ink-600};
+  --header-pb-value: #{vars.$neutral-900};
+  --header-pb-icon: #{vars.$neutral-900};
+  --bg-toolbar: #{vars.$black-a05};
+  --bg-item-hover: #{vars.$black-a08};
+  --bg-item-active: #{vars.$black-a10};
+  --dropddown-selected: #{vars.$black-a05};
+  --shadow-dropdown: #{vars.$black-a20};
+  --border: #{vars.$sepia-ink-400};
+  --accent-color: #{vars.$neutral-900};
+  --text-correct: #{vars.$neutral-900};
+  --text-incorrect: #{vars.$red-500};
+  --timer-low: #{vars.$red-500};
+  --bg-char: #{vars.$black-a08};
+  --border-toolbar: #{vars.$sepia-ink-400};
+  --divider-ui: #{vars.$sepia-ink-400};
+  --btn-refresh: #{vars.$sepia-ink-600};
+  --text-hover: #{vars.$neutral-900};
+  --text-unfocused: #{vars.$sepia-ink-400};
+  --text-unfocused-hover: #{vars.$neutral-900};
+  --shadow-unfocused: #{vars.$black-a10};
+  --glow-unfocused: #{vars.$black-a10};
+  --shadow-popover: #{vars.$black-a40};
+  --text-ghost: #{vars.$sepia-ink-400};
+  --text-on-accent: #{vars.$neutral-100};
+  --btn-color-active: #{vars.$neutral-900};
+  --btn-color-sub: #{vars.$sepia-ink-600};
+  --btn-color-hover: #{vars.$neutral-900};
+}

@@ -1,0 +1,42 @@
+@use '../../tokens' as vars;
+
+[data-theme='sakura'] {
+  --background-body: #{vars.$sakura-light-bg};
+  --font-family-base: #{vars.$font-sora};
+  --text: #{vars.$sakura-light-text};
+  --text-secondary: #{vars.$sakura-light-main};
+  --label: #{vars.$sakura-light-text};
+  --sub-label: #{vars.$sakura-light-text};
+  --value: #{vars.$sakura-light-accent};
+  --option-hover: #{vars.$sakura-light-main};
+  --brand: #{vars.$sakura-light-main};
+  --suffix: #{vars.$sakura-light-text};
+  --header-pb: #{vars.$sakura-light-text};
+  --header-pb-value: #{vars.$sakura-light-main};
+  --header-pb-icon: #{vars.$sakura-light-accent};
+  --bg-toolbar: #{vars.$black-a05};
+  --bg-item-hover: #{vars.$black-a05};
+  --bg-item-active: #{vars.$black-a08};
+  --shadow-dropdown: #{vars.$black-a10};
+  --dropddown-selected: #{vars.$black-a05};
+  --text-correct: #{vars.$sakura-light-main};
+  --text-incorrect: #{vars.$red-500};
+  --timer-low: #{vars.$red-500};
+  --bg-char: #{vars.$black-a05};
+  --border: #{vars.$black-a10};
+  --border-toolbar: #{vars.$black-a10};
+  --accent-color: #{vars.$sakura-light-accent};
+  --divider-ui: #{vars.$black-a08};
+  --btn-refresh: #{vars.$sakura-light-text};
+  --text-hover: #{vars.$sakura-light-main};
+  --text-unfocused: #{vars.$sakura-light-text};
+  --text-unfocused-hover: #{vars.$sakura-light-main};
+  --shadow-unfocused: #{vars.$black-a05};
+  --glow-unfocused: transparent;
+  --shadow-popover: #{vars.$black-a20};
+  --text-ghost: #{vars.$sakura-light-text};
+  --text-on-accent: #{vars.$neutral-0};
+  --btn-color-active: #{vars.$sakura-light-accent};
+  --btn-color-sub: #{vars.$sakura-light-text};
+  --btn-color-hover: #{vars.$sakura-light-main};
+}

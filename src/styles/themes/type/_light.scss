@@ -1,0 +1,43 @@
+@use '../../tokens' as vars;
+
+[data-theme='light'] {
+  --background-body: #{vars.$neutral-0};
+  --font-family-base: #{vars.$font-sora};
+  --text: #{vars.$neutral-600};
+  --text-secondary: #{vars.$neutral-900};
+  --label: #{vars.$neutral-900};
+  --sub-label: #{vars.$neutral-600};
+  --value: #{vars.$neutral-900};
+  --option-hover: #{vars.$neutral-900};
+  --brand: #{vars.$neutral-900};
+  --suffix: #{vars.$neutral-550};
+  --header-pb: #{vars.$neutral-550};
+  --header-pb-value: #{vars.$neutral-900};
+  --header-pb-icon: #{vars.$yellow-600};
+  --bg-toolbar: #{vars.$black-a05};
+  --bg-item-hover: #{vars.$black-a05};
+  --bg-item-active: #{vars.$black-a08};
+  --dropddown-selected: #{vars.$black-a02};
+  --shadow-dropdown: #{vars.$black-a10};
+  --border: #{vars.$neutral-100};
+  --accent-color: #{vars.$yellow-600};
+  --text-correct: #{vars.$green-500};
+  --text-incorrect: #{vars.$red-500};
+  --timer-low: #{vars.$red-500};
+  --bg-char: #{vars.$black-a05};
+  --border: #{vars.$neutral-100};
+  --border-toolbar: #{vars.$neutral-100};
+  --accent-color: #{vars.$yellow-600};
+  --divider-ui: #{vars.$black-a10};
+  --btn-refresh: #{vars.$neutral-400};
+  --text-unfocused: #{vars.$neutral-550};
+  --text-unfocused-hover: #{vars.$neutral-900};
+  --shadow-unfocused: #{vars.$black-a05};
+  --glow-unfocused: #{vars.$black-a10};
+  --shadow-popover: #{vars.$black-a10};
+  --text-ghost: #{vars.$neutral-400};
+  --text-on-accent: #{vars.$neutral-900};
+  --btn-color-active: #{vars.$yellow-600};
+  --btn-color-sub: #{vars.$neutral-600};
+  --btn-color-hover: #{vars.$neutral-900};
+}

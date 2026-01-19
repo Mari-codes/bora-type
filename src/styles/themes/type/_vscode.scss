@@ -1,0 +1,41 @@
+@use '../../tokens' as vars;
+
+[data-theme='vs code'] {
+  --background-body: #{vars.$vscode-bg};
+  --font-family-base: #{vars.$font-sora};
+  --text: #{vars.$vscode-text};
+  --text-secondary: #{vars.$neutral-0};
+  --label: #{vars.$neutral-500};
+  --sub-label: #{vars.$neutral-600};
+  --value: #{vars.$vscode-cyan};
+  --option-hover: #{vars.$vscode-cyan};
+  --brand: #{vars.$neutral-0};
+  --suffix: #{vars.$vscode-text};
+  --header-pb: #{vars.$neutral-500};
+  --header-pb-value: #{vars.$vscode-cyan};
+  --header-pb-icon: #{vars.$vscode-blue};
+  --bg-toolbar: #{vars.$black-a20};
+  --bg-item-hover: #{vars.$vscode-hover};
+  --bg-item-active: #{vars.$vscode-active};
+  --shadow-dropdown: #{vars.$black-a60};
+  --dropddown-selected: #{vars.$vscode-active};
+  --text-correct: #{vars.$neutral-0};
+  --text-incorrect: #{vars.$red-500};
+  --timer-low: #{vars.$red-500};
+  --bg-char: #{vars.$cyan-a10};
+  --border: #{vars.$vscode-border};
+  --border-toolbar: #{vars.$vscode-border};
+  --accent-color: #{vars.$vscode-blue};
+  --divider-ui: #{vars.$vscode-border};
+  --btn-refresh: #{vars.$neutral-550};
+  --text-unfocused: #{vars.$neutral-600};
+  --text-unfocused-hover: #{vars.$vscode-cyan};
+  --shadow-unfocused: #{vars.$black-a60};
+  --glow-unfocused: #{vars.$blue-a20};
+  --shadow-popover: #{vars.$black-a60};
+  --text-ghost: #{vars.$neutral-600};
+  --text-on-accent: #{vars.$neutral-0};
+  --btn-color-active: #{vars.$vscode-blue};
+  --btn-color-sub: #{vars.$neutral-600};
+  --btn-color-hover: #{vars.$vscode-cyan};
+}
