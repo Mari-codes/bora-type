@@ -9,8 +9,14 @@ export interface DifficultyLevels {
   hard: Passage[];
 }
 
-export type Category = 'standard' | 'quotes' | 'lyrics' | 'code';
+export type AdultCategory = 'standard' | 'quotes' | 'lyrics' | 'code';
+export type KidsCategory = 'standard' | 'quotes' | 'lyrics' | 'code';
 
-export type AdultData = {
-  [key in Category]: DifficultyLevels;
+export type GameData<C extends string> = {
+  [key in C]: DifficultyLevels;
 };
+
+export type AdultData = GameData<AdultCategory>;
+export type KidsData = GameData<KidsCategory>;
+
+export type Category = AdultCategory | KidsCategory;
