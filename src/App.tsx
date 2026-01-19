@@ -4,6 +4,7 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
+import { Home } from './pages/Home'; // Importando a nova Home
 import { AdultsPage } from './pages/AdultsPage';
 import { KidsPage } from './pages/KidsPage';
 
@@ -11,7 +12,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/adults" replace />} />
+        <Route path="/" element={<Home />} />
         <Route path="/adults" element={<AdultsPage />} />
         <Route path="/kids" element={<KidsPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
