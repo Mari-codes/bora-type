@@ -31,7 +31,7 @@ export const Home = () => {
       </Link>
 
       <Link
-        to="/adults"
+        to="/type"
         className={`${styles['home-split__side']} ${styles['home-split__side--adults']}`}
       >
         <div className={styles['home-split__content']}>
