@@ -9,6 +9,14 @@
     border-left: 2px solid transparent;
     font-size: vars.$font-size-2xl;
 
+    @media (max-width: 768px) {
+      font-size: vars.$font-size-xl;
+    }
+
+    @media (max-width: 480px) {
+      font-size: vars.$font-size-lg;
+    }
+
     &--correct {
       color: var(--text-correct);
     }

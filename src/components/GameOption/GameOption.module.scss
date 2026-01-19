@@ -4,38 +4,162 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  font-weight: var(--font-weight);
+  position: relative;
+  z-index: 102;
 
   &__label {
     color: var(--label);
     font-size: vars.$font-size-sm;
     text-transform: uppercase;
     letter-spacing: 1px;
+    white-space: nowrap;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   &__buttons {
     display: flex;
     gap: 12px;
   }
+
+  &--kids {
+    @media (max-width: 1126px) {
+      .option-group__buttons {
+        display: none;
+      }
+
+      .custom-dropdown {
+        display: block;
+      }
+    }
+  }
+}
+
+.custom-dropdown {
+  display: none;
+  position: relative;
+  min-width: 120px;
+
+  @media (max-width: 768px) {
+    min-width: 100px;
+  }
+
+  @media (max-width: 480px) {
+    max-width: 120px;
+  }
+
+  @media (max-width: 400px) {
+    max-width: 95px;
+    min-width: 80px;
+  }
+
+  &__header {
+    background: var(--background-btn-color);
+    font-weight: 800;
+    color: var(--btn-color-sub);
+    border: var(--background-btn-border);
+    box-shadow: var(--box-shadow-btn);
+    border-radius: var(--border-btn-option);
+    padding: var(--padding-btn-option);
+    cursor: pointer;
+    font-size: vars.$font-size-sm;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    text-transform: var(--text-transform-btn);
+
+    @media (max-width: 480px) {
+      font-size: 10px;
+      padding: 6px 10px;
+    }
+
+    @media (max-width: 400px) {
+      font-size: 9px;
+      padding: 6px 8px;
+    }
+  }
+
+  &__icon {
+    transition: transform 0.2s ease;
+    opacity: 0.6;
+    color: var(--color-icon-theme);
+  }
+
+  &--open &__icon {
+    transform: rotate(180deg);
+  }
+
+  &__list {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: 100%;
+    background: var(--background-btn-color);
+    border: var(--background-btn-border);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    border-radius: var(--border-btn-option);
+    list-style: none;
+    padding: 6px 0;
+    z-index: 9999;
+  }
+
+  &__item {
+    padding: 8px 12px;
+    font-size: vars.$font-size-sm;
+    color: var(--btn-color-sub);
+    cursor: pointer;
+
+    &:hover {
+      background: var(--background-btn-active);
+      color: var(--btn-color-active);
+    }
+
+    &--active {
+      color: var(--btn-color-drop-active);
+      font-weight: 700;
+    }
+    @media (max-width: 480px) {
+      font-size: 10px;
+      padding: 6px 10px;
+    }
+
+    @media (max-width: 400px) {
+      font-size: 9px;
+      padding: 4px 8px;
+    }
+  }
 }
 
 .option-btn {
-  background: transparent;
-  color: var(--sub-label);
-  padding: 4px 0;
+  background: var(--background-btn-color);
+  color: var(--btn-color-sub);
+  border: var(--background-btn-border);
+  box-shadow: var(--box-shadow-btn);
+  border-radius: var(--border-btn-option);
+  padding: var(--padding-btn-option);
   cursor: pointer;
   font-size: vars.$font-size-sm;
   font-family: inherit;
-  transition: all 0.2s ease;
-  text-transform: capitalize;
   position: relative;
+  text-transform: var(--text-transform-btn);
 
   &:hover {
-    color: var(--option-hover);
+    color: var(--btn-color-hover);
+    transform: var(--press-transform);
+    box-shadow: var(--press-shadow);
   }
 
   &--active {
-    color: var(--accent-color);
-    font-weight: bold;
+    background-color: var(--background-btn-active);
+    color: var(--btn-color-active);
+    font-weight: 700;
+    box-shadow: var(--box-shadow-btn-active);
 
     &::after {
       content: '';
@@ -43,9 +167,24 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 2px;
+      height: var(--underline-height);
       background: var(--accent-color);
-      border-radius: 2px;
+      border-radius: var(--underline-radius);
     }
+  }
+
+  @media (max-width: 768px) {
+    padding: var(--padding-btn-option-sm);
+    font-size: vars.$font-size-xs;
+  }
+
+  @media (max-width: 480px) {
+    padding: var(--padding-btn-option-xs);
+  }
+}
+
+@media (max-width: 1370px) {
+  .option-btn {
+    padding: var(--padding-btn-option-md);
   }
 }

@@ -42,18 +42,30 @@ export const KidsPage = () => {
       return {
         title: 'First Star!',
         description: 'You did it! Welcome to the game!',
-        icon: <Star size={60} color="#FFD700" />,
+        icon: (
+          <Star
+            className={`${styles['kids-page__modal-icon']} ${styles['kids-page__modal-icon--star']}`}
+          />
+        ),
       };
     if (game.isNewRecord)
       return {
         title: 'Super Speed!',
         description: 'You are getting so fast!',
-        icon: <Rocket size={60} color="#FF4500" />,
+        icon: (
+          <Rocket
+            className={`${styles['kids-page__modal-icon']} ${styles['kids-page__modal-icon--rocket']}`}
+          />
+        ),
       };
     return {
       title: 'Great Job!',
       description: 'Practice makes perfect!',
-      icon: <PartyPopper size={60} color="#FF69B4" />,
+      icon: (
+        <PartyPopper
+          className={`${styles['kids-page__modal-icon']} ${styles['kids-page__modal-icon--party-popper']}`}
+        />
+      ),
     };
   }, [game.isFinished, game.isNewRecord, game.isFirstTime]);
 
@@ -96,6 +108,7 @@ export const KidsPage = () => {
               setCategory(v);
               game.handleNewText();
             }}
+            mode="kids"
           />
           <GameOption
             label="Level:"
@@ -105,6 +118,7 @@ export const KidsPage = () => {
               setDifficulty(v as any);
               game.handleNewText();
             }}
+            mode="kids"
           />
           <GameOption
             label="Timer:"
@@ -114,6 +128,7 @@ export const KidsPage = () => {
               setDuration(val as number);
               game.handleNewText();
             }}
+            mode="kids"
           />
         </nav>
       </div>
@@ -137,7 +152,7 @@ export const KidsPage = () => {
         onClick={game.handleNewText}
         aria-label="Restart"
       >
-        <RotateCcw size={32} />
+        <RotateCcw className={styles['kids-page__btn-refresh-icon']} />
       </button>
 
       {game.isFinished && modalContent && (

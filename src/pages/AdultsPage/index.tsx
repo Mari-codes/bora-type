@@ -1,210 +1,144 @@
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   RotateCcw,
   Trophy,
   Target,
   CheckCircle2,
-  Infinity as InfinityIcon,
+  Settings,
+  X,
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { adultPassages } from '../../data/adultContent';
 import styles from './AdultsPage.module.scss';
 import { TypingGame } from '../../components/TypingGame';
 import { GameOption } from '../../components/GameOption';
-import type { Category } from '../../types/gameTypes';
 import Timer from '../../components/Timer';
 import { Header } from '../../components/Header';
-import { usePersonalBest } from '../../hooks/usePersonalBest';
 import { ResultsModal } from '../../components/ResultsModal';
+import type { Category } from '../../types/gameTypes';
+import { usePersonalBest } from '../../hooks/usePersonalBest';
+import { useFocusRescue } from '../../hooks/useFocusRescue';
+import { useTypingGameLogic } from '../../hooks/useTypingGameLogic';
+import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
+import { useGameCompletion } from '../../hooks/useGameCompletion';
 
 export const AdultsPage = () => {
   const { personalBest, updatePersonalBest } = usePersonalBest('type');
+  const game = useTypingGameLogic();
+
   const [category, setCategory] = useState<Category>('standard');
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>(
     'easy',
   );
   const [duration, setDuration] = useState<number | 'inf'>(30);
-  const [refreshSeed, setRefreshSeed] = useState(0);
-  const [timerKey, setTimerKey] = useState(0);
-  const [wpm, setWpm] = useState(0);
-  const [accuracy, setAccuracy] = useState(100);
-  const [isActive, setIsActive] = useState(false);
-  const [isFinished, setIsFinished] = useState(false);
-  const [correct, setCorrect] = useState(0);
-  const [mistakes, setMistakes] = useState(0);
-  const [isNewRecord, setIsNewRecord] = useState(false);
-  const [isFirstTime, setIsFirstTime] = useState(false);
 
-  const timeOptions = useMemo(
-    () => [15, 30, 60, 120, <InfinityIcon key="inf" size={20} />],
-    [],
+  const [tempCategory, setTempCategory] = useState<Category>(category);
+  const [tempDifficulty, setTempDifficulty] = useState<
+    'easy' | 'medium' | 'hard'
+  >(difficulty);
+  const [tempDuration, setTempDuration] = useState<number | 'inf'>(duration);
+
+  const [isConfigOpen, setIsConfigOpen] = useState(false);
+
+  useFocusRescue(game.handleNewText, game.isFinished);
+  useKeyboardShortcut('Tab', game.handleNewText);
+
+  const { handleTimeUp } = useGameCompletion(
+    game,
+    personalBest,
+    updatePersonalBest,
   );
 
-  const handleNewText = useCallback(() => {
-    setRefreshSeed((s) => s + 1);
-    setTimerKey((k) => k + 1);
-    setWpm(0);
-    setAccuracy(100);
-    setCorrect(0);
-    setMistakes(0);
-    setIsActive(false);
-    setIsFinished(false);
-    setIsNewRecord(false);
-    setIsFirstTime(false);
-  }, []);
-
-  const handleDurationChange = (val: any) => {
-    if (typeof val === 'number') {
-      setDuration(val);
-    } else {
-      setDuration('inf');
-    }
-    handleNewText();
-  };
+  const timeOptions = useMemo<
+    (number | { value: number | 'inf'; label: React.ReactNode })[]
+  >(() => [15, 30, 60, 120, { value: 'inf', label: 'inf' }], []);
 
   const currentText = useMemo(() => {
     const list = adultPassages[category][difficulty];
     return list[Math.floor(Math.random() * list.length)].text;
-  }, [category, difficulty, refreshSeed]);
+  }, [category, difficulty, game.refreshSeed]);
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Tab') {
-        e.preventDefault();
-        handleNewText();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleNewText]);
-
-  useEffect(() => {
-    const getGameInput = () =>
-      document.querySelector('input[type="text"]') as HTMLInputElement;
-
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'data-theme') {
-          handleNewText();
-          setTimeout(() => getGameInput()?.focus(), 50);
-        }
-      });
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme'],
-    });
-
-    const handleGlobalKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Tab' || e.ctrlKey || e.metaKey || isFinished) return;
-
-      const activeEl = document.activeElement;
-      const input = getGameInput();
-
-      if (input && activeEl !== input) {
-        input.focus();
+    const handleResize = () => {
+      if (window.innerWidth > 1126 && isConfigOpen) {
+        setIsConfigOpen(false);
       }
     };
 
-    const recoverFocus = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest('button') && !target.closest('select')) {
-        getGameInput()?.focus();
-      }
-    };
-
-    window.addEventListener('keydown', handleGlobalKeyDown, true);
-    window.addEventListener('click', recoverFocus);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      observer.disconnect();
-      window.removeEventListener('keydown', handleGlobalKeyDown, true);
-      window.removeEventListener('click', recoverFocus);
+      window.removeEventListener('resize', handleResize);
     };
-  }, [handleNewText, isFinished]);
+  }, [isConfigOpen]);
 
-  const handleStatsUpdate = useCallback((stats: any) => {
-    setWpm(stats.wpm);
-    setAccuracy(stats.accuracy);
-    setCorrect(stats.correct);
-    setMistakes(stats.mistakes);
-  }, []);
-
-  const handleGameStart = useCallback(() => setIsActive(true), []);
-
-  const handleTimeUp = useCallback(() => {
-    if (isFinished) return;
-    const wasFirstTime = personalBest === 0;
-    const wasRecord = updatePersonalBest(wpm);
-
-    if (!wasFirstTime && wasRecord) {
-      const config = {
-        particleCount: 250,
-        spread: 60,
-        gravity: 2.5,
-        scalar: 0.8,
-        colors: ['#e2b714', '#ffffff', '#646669'],
-        zIndex: 9999,
-        startVelocity: 45,
-      };
-      confetti({ ...config, origin: { x: 0.2, y: -0.1 } });
-      confetti({ ...config, origin: { x: 0.8, y: -0.1 } });
+  useEffect(() => {
+    if (game.isFinished && isConfigOpen) {
+      setIsConfigOpen(false);
     }
-
-    if (wasFirstTime) setIsFirstTime(true);
-    else if (wasRecord) setIsNewRecord(true);
-
-    setIsActive(false);
-    setIsFinished(true);
-  }, [wpm, personalBest, updatePersonalBest, isFinished]);
+  }, [game.isFinished, isConfigOpen]);
 
   const modalContent = useMemo(() => {
-    if (!isFinished) return null;
-    if (isFirstTime)
+    if (!game.isFinished) return null;
+
+    if (game.isFirstTime) {
       return {
         title: 'Baseline Established!',
         description: 'You’ve set the bar.',
-        icon: <Target size={60} color="#6e96bd" />,
+        icon: (
+          <Target
+            className={`${styles['adults-page__modal-icon']} ${styles['adults-page__modal-icon--target']}`}
+          />
+        ),
       };
-    if (isNewRecord)
+    }
+
+    if (game.isNewRecord) {
       return {
         title: 'High Score Smashed!',
-        description: `Faster than ever!`,
-        icon: <Trophy size={60} color="#e2b714" />,
+        description: 'Faster than ever!',
+        icon: (
+          <Trophy
+            className={`${styles['adults-page__modal-icon']} ${styles['adults-page__modal-icon--trophy']}`}
+          />
+        ),
       };
+    }
+
     return {
       title: 'Test Completed!',
       description: 'Solid run.',
-      icon: <CheckCircle2 size={60} color="#646669" />,
+      icon: (
+        <CheckCircle2
+          className={`${styles['adults-page__modal-icon']} ${styles['adults-page__modal-icon--check-circle']}`}
+        />
+      ),
     };
-  }, [isFinished, isNewRecord, isFirstTime]);
+  }, [game.isFinished, game.isNewRecord, game.isFirstTime]);
 
   return (
-    <div className={styles['adults-page']}>
+    <div className={`${styles['adults-page']} adults-mode`}>
       <Header variant="type" personalBestWpm={personalBest} />
 
       <div className={styles['adults-page__toolbar']}>
-        <div
-          className={`${styles['adults-page__stats']} ${isActive ? styles['adults-page__stats--active'] : ''}`}
-        >
+        <div className={styles['adults-page__stats']}>
           <div className={styles['adults-page__stat']}>
             <span className={styles['adults-page__label']}>WPM:</span>
-            <strong className={styles['adults-page__value']}>{wpm}</strong>
+            <strong className={styles['adults-page__value']}>{game.wpm}</strong>
           </div>
+
           <div className={styles['adults-page__stat']}>
             <span className={styles['adults-page__label']}>Accuracy:</span>
             <strong className={styles['adults-page__value']}>
-              {accuracy}%
+              {game.accuracy}%
             </strong>
           </div>
 
           <div className={styles['adults-page__stat']}>
             <span className={styles['adults-page__label']}>Time:</span>
             <Timer
-              key={timerKey}
+              key={game.timerKey}
               duration={duration === 'inf' ? 0 : duration}
-              isActive={isActive && !isFinished}
+              isActive={game.isActive && !game.isFinished}
               onTimeUp={handleTimeUp}
             />
           </div>
@@ -212,69 +146,142 @@ export const AdultsPage = () => {
 
         <nav className={styles['adults-page__config']}>
           <GameOption
-            label="Mode:"
+            label="Mode"
             options={['standard', 'quotes', 'code', 'lyrics']}
             currentValue={category}
             onChange={(v) => {
               setCategory(v as Category);
-              handleNewText();
+              game.handleNewText();
             }}
           />
+
           <GameOption
-            label="Difficulty:"
+            label="Difficulty"
             options={['easy', 'medium', 'hard']}
             currentValue={difficulty}
             onChange={(v) => {
               setDifficulty(v as any);
-              handleNewText();
+              game.handleNewText();
             }}
           />
-          <GameOption
-            label="Time:"
+
+          <GameOption<number | 'inf'>
+            label="Time"
             options={timeOptions}
-            currentValue={duration === 'inf' ? timeOptions[4] : duration}
-            onChange={handleDurationChange}
+            currentValue={duration}
+            onChange={(v) => {
+              setDuration(v);
+              game.handleNewText();
+            }}
           />
         </nav>
+
+        <button
+          className={styles['adults-page__config-btn']}
+          onClick={() => {
+            setTempCategory(category);
+            setTempDifficulty(difficulty);
+            setTempDuration(duration);
+            setIsConfigOpen(true);
+          }}
+        >
+          <Settings size={20} />
+        </button>
       </div>
 
       <main className={styles['adults-page__main']}>
-        {!isFinished && (
+        {!game.isFinished && (
           <TypingGame
-            key={`${category}-${difficulty}-${duration}-${refreshSeed}`}
+            key={`${category}-${difficulty}-${duration}-${game.refreshSeed}`}
             text={currentText}
             category={category}
-            isFinished={isFinished}
-            onStatsUpdate={handleStatsUpdate}
+            isFinished={game.isFinished}
+            onStatsUpdate={game.handleStatsUpdate}
             onComplete={handleTimeUp}
-            onStart={handleGameStart}
+            onStart={() => game.setIsActive(true)}
           />
         )}
       </main>
 
-      <div className={styles['adults-page__actions']}>
-        <button
-          className={styles['adults-page__btn-refresh']}
-          onClick={handleNewText}
-        >
-          <RotateCcw size={24} strokeWidth={2.5} />
-        </button>
-        <span className={styles['adults-page__hint']}>
-          <kbd>tab</kbd> - restart test
-        </span>
-      </div>
+      <button
+        className={styles['adults-page__btn-refresh']}
+        onClick={game.handleNewText}
+      >
+        <RotateCcw size={24} />
+      </button>
 
-      {isFinished && modalContent && (
+      {game.isFinished && modalContent && (
         <ResultsModal
-          wpm={wpm}
-          accuracy={accuracy}
-          correct={correct}
-          mistakes={mistakes}
-          onRestart={handleNewText}
-          title={modalContent.title}
-          description={modalContent.description}
-          icon={modalContent.icon}
+          wpm={game.wpm}
+          accuracy={game.accuracy}
+          correct={game.correct}
+          mistakes={game.mistakes}
+          onRestart={game.handleNewText}
+          {...modalContent}
         />
+      )}
+
+      {isConfigOpen && (
+        <div
+          className={styles['config-modal__overlay']}
+          onClick={() => setIsConfigOpen(false)}
+        >
+          <div
+            className={styles['config-modal']}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <header className={styles['config-modal__header']}>
+              <h3>Settings</h3>
+              <button onClick={() => setIsConfigOpen(false)}>
+                <X size={18} />
+              </button>
+            </header>
+
+            <div className={styles['config-modal__content']}>
+              <GameOption
+                label="Mode"
+                options={['standard', 'quotes', 'code', 'lyrics']}
+                currentValue={tempCategory}
+                onChange={(v) => setTempCategory(v as Category)}
+              />
+
+              <GameOption
+                label="Difficulty"
+                options={['easy', 'medium', 'hard']}
+                currentValue={tempDifficulty}
+                onChange={(v) => setTempDifficulty(v as any)}
+              />
+
+              <GameOption<number | 'inf'>
+                label="Time"
+                options={timeOptions}
+                currentValue={tempDuration}
+                onChange={(v) => setTempDuration(v)}
+              />
+            </div>
+
+            <footer className={styles['config-modal__footer']}>
+              <button
+                className={styles['config-modal__cancel']}
+                onClick={() => setIsConfigOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className={styles['config-modal__apply']}
+                onClick={() => {
+                  setCategory(tempCategory);
+                  setDifficulty(tempDifficulty);
+                  setDuration(tempDuration);
+                  game.handleNewText();
+                  setIsConfigOpen(false);
+                }}
+              >
+                Apply
+              </button>
+            </footer>
+          </div>
+        </div>
       )}
     </div>
   );

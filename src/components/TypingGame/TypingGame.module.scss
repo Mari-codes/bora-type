@@ -2,6 +2,7 @@
   width: 100%;
   cursor: text;
   position: relative;
+  z-index: 1;
 
   & > :not(input) {
     filter: blur(0);
@@ -25,7 +26,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
-    font-size: 1.5rem;
+    font-size: 24px;
     color: var(--text-unfocused);
     font-weight: bold;
     cursor: pointer;
@@ -39,6 +40,10 @@
     &:hover {
       color: var(--text-unfocused-hover);
       text-shadow: 0 0 15px var(--glow-unfocused);
+    }
+
+    @media (max-width: 480px) {
+      font-size: 18px;
     }
   }
 

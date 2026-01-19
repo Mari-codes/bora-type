@@ -1,15 +1,40 @@
-//@use '../../styles/tokens' as vars;
-
 .timer {
   color: var(--accent-color);
 
   &__value {
-    font-weight: bold;
-    font-size: 24px;
+    font-weight: var(--timer-font-weight);
+    font-size: var(--timer-font-size);
+    -webkit-text-stroke: var(--timer-text-stroke-width)
+      var(--timer-text-stroke-color);
+    line-height: var(--timer-line-height);
     color: var(--accent-color);
 
     &--low {
       color: var(--timer-low);
+    }
+  }
+}
+
+@media (max-width: 1126px) {
+  .timer {
+    &__value {
+      font-size: var(--timer-font-size-md);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .timer {
+    &__value {
+      font-size: var(--timer-font-size-sm);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .timer {
+    &__value {
+      font-size: var(--timer-font-size-xs);
     }
   }
 }

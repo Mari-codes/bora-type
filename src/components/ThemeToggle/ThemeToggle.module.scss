@@ -1,10 +1,13 @@
+@use '../../styles/tokens' as vars;
+
 .themeToggle {
   position: relative;
   display: inline-block;
 
   &__icon {
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    color: var(--accent-color);
+    color: var(--color-icon-theme);
+    fill: var(--fil-icon-theme);
     stroke: currentColor;
 
     &--rotated {
@@ -13,34 +16,42 @@
   }
 
   &__trigger {
-    background: transparent;
-    border: none;
+    background: var(--trigger-bg);
+    border: var(--trigger-border);
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 8px;
-    cursor: pointer;
+    gap: 4px;
     padding: 6px 12px;
-    border-radius: 4px;
+    border-radius: var(--trigger-radius);
     color: var(--text);
-    transition: all 0.2s ease;
+
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease,
+      background 0.15s ease,
+      color 0.15s ease;
+
+    box-shadow: var(--trigger-shadow-rest);
+    transform: translateY(0);
 
     &:hover {
       color: var(--text-secondary);
+      cursor: pointer;
     }
 
-    &--active {
-      color: var(--text-secondary);
-
+    &--active,
+    &:active {
       background: var(--bg-item-active);
+      transform: var(--trigger-transform-active);
+      box-shadow: var(--trigger-shadow-active);
     }
   }
 
   &__currentName {
-    font-size: 0.85rem;
-
+    font-size: 14px;
     text-transform: lowercase;
-
-    font-weight: 500;
+    font-weight: var(--dd-font-weight);
   }
 
   &__dropdown {
@@ -48,27 +59,28 @@
     top: calc(100% + 8px);
     right: 0;
     background-color: var(--background-body);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 6px;
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--border-radius-dd);
+    padding: var(--padding-dd);
     min-width: 150px;
     z-index: 100;
-    box-shadow: 0 10px 30px var(--shadow-dropdown);
     display: flex;
     flex-direction: column;
     gap: 4px;
-    animation: slideIn 0.25s ease-out;
+    box-shadow: var(--dropdown-shadow);
+    animation: var(--dropdown-animation);
   }
 
   &__option {
     background: transparent;
     border: none;
     color: var(--text);
-    padding: 8px 12px;
+    padding: var(--option-padding-y) var(--option-padding-x);
     text-align: left;
     cursor: pointer;
-    border-radius: 4px;
-    font-size: 0.8rem;
+    border-radius: var(--option-radius);
+    font-size: var(--option-font-size);
+    font-weight: var(--option-font-weight);
     text-transform: lowercase;
     display: flex;
     justify-content: space-between;
@@ -78,21 +90,23 @@
     &:hover {
       background: var(--bg-item-hover);
       color: var(--text-secondary);
+      transform: translateX(var(--option-hover-translate-x));
     }
 
     &--selected {
-      color: var(--accent-color) !important;
-      font-weight: 600;
+      color: var(--accent-color);
+      font-weight: var(--option-font-weight-selected);
       background: var(--dropddown-selected);
     }
   }
 
   &__dot {
-    width: 6px;
-    height: 6px;
+    width: var(--dot-size);
+    height: var(--dot-size);
     background-color: var(--accent-color);
     border-radius: 50%;
-    box-shadow: 0 0 8px var(--accent-color);
+    border: var(--dot-border);
+    box-shadow: var(--dot-shadow);
   }
 }
 
@@ -105,5 +119,30 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 700px) {
+  .themeToggle {
+    &__currentName {
+      font-size: 12px;
+    }
+
+    &__trigger {
+      padding: 4px 8px;
+    }
+
+    &__option {
+      font-size: vars.$font-size-xs;
+      padding: 6px 8px;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .themeToggle {
+    &__currentName {
+      display: none;
+    }
   }
 }

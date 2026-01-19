@@ -1,17 +1,20 @@
-@use '../../styles/tokens' as vars;
-
 .adults-page {
   padding: 30px 100px;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
   overflow: hidden;
-  height: 100vh;
-  height: 100svh;
+
   &__toolbar {
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
     align-items: center;
     padding: 50px 0;
     gap: 10px;
+    position: relative;
+    z-index: 2;
   }
 
   &__config,
@@ -23,14 +26,7 @@
     border-radius: 8px;
     border: 1px solid var(--border-toolbar);
     transition: all 0.3s ease;
-
-    &.active {
-      opacity: 1;
-    }
-
-    &:not(.active) {
-      opacity: 0.8;
-    }
+    position: relative;
   }
 
   &__config > *,
@@ -53,43 +49,34 @@
         width: 1px;
         background-color: var(--divider-ui);
         border-radius: 2px;
+        pointer-events: none;
       }
     }
-  }
-
-  &__label {
-    color: var(--label);
-    font-size: vars.$font-size-sm;
-    text-transform: uppercase;
-    margin-right: 12px;
-    line-height: 1;
-  }
-
-  &__value {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--value);
-    line-height: 1;
-    display: flex;
-    align-items: center;
   }
 
   &__main {
     min-height: 300px;
     width: 100%;
+    position: relative;
+    z-index: 0;
   }
 
-  &__actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 30px;
-    gap: 8px;
+  &__label {
+    font-size: 20px;
+    margin-right: 8px;
+  }
+
+  &__value {
+    font-size: 24px;
+    font-weight: 700;
   }
 
   &__btn-refresh {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: transparent;
+    margin: 0 auto;
     border: none;
     color: var(--btn-refresh);
     cursor: pointer;
@@ -108,22 +95,248 @@
     }
   }
 
-  &__hint {
-    font-size: 11px;
-    color: var(--text);
-    text-transform: lowercase;
-    transition: opacity 0.2s;
-    pointer-events: none;
+  &__config-btn {
+    display: none;
+    background: var(--background-btn-color);
+    border: var(--background-btn-border);
+    box-shadow: var(--box-shadow-btn);
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--btn-color-sub);
+    transition: all 0.2s ease;
 
-    opacity: 0.8;
-
-    kbd {
-      background: var(--bg-kbd);
-      color: var(--text-secondary);
-      padding: 2px 5px;
-      border-radius: 3px;
-      font-family: inherit;
-      border: 1px solid var(--border-kbd);
+    &:hover {
+      color: var(--btn-color-hover);
     }
+  }
+
+  &__modal-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  &__modal-icon--target {
+    color: var(--accent);
+  }
+
+  &__modal-icon--trophy {
+    color: var(--color-gold);
+  }
+
+  &__modal-icon--check-circle {
+    color: var(--text-secondary);
+  }
+}
+
+@media (max-width: 1126px) {
+  .adults-page {
+    padding: 20px;
+
+    &__toolbar {
+      flex-direction: row;
+      justify-content: center;
+    }
+
+    &__config {
+      display: none;
+    }
+
+    &__config-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .adults-page {
+    padding: 16px;
+
+    &__toolbar {
+      padding: 30px 0;
+      gap: 8px;
+    }
+
+    &__label {
+      font-size: 16px;
+    }
+
+    &__value {
+      font-size: 18px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .adults-page {
+    &__toolbar {
+      padding: 20px 0;
+    }
+
+    &__label {
+      font-size: 14px;
+    }
+
+    &__value {
+      font-size: 16px;
+    }
+
+    &__stats {
+      padding: 6px 12px;
+    }
+
+    &__stat {
+      &:not(:last-child) {
+        margin-right: 8px;
+        padding-right: 8px;
+
+        &::after {
+          height: 16px;
+        }
+      }
+    }
+
+    &__config-btn {
+      padding: 6px;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .adults-page {
+    &__label {
+      font-size: 12px;
+    }
+  }
+}
+
+.config-modal__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  padding-top: 170px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  background: rgba(0, 0, 0, 0.4);
+
+  @media (max-width: 768px) {
+    padding-top: 130px;
+  }
+
+  @media (max-width: 480px) {
+    padding-top: 110px;
+  }
+}
+
+.config-modal {
+  max-width: 420px;
+  width: 100%;
+  background: var(--background-body);
+  border-radius: 16px;
+  padding: 26px;
+
+  animation: modalIn 0.2s ease-out;
+
+  @media (max-width: 768px) {
+    max-width: 320px;
+  }
+
+  @media (max-width: 480px) {
+    max-width: 280px;
+    padding: 20px;
+  }
+
+  @media (max-width: 400px) {
+    max-width: 240px;
+  }
+}
+
+.config-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+
+  h3 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--label);
+  }
+
+  button {
+    background: none;
+    border: none;
+    color: var(--btn-color-sub);
+    cursor: pointer;
+  }
+}
+
+.config-modal__content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.config-modal__footer {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--divider-ui);
+  display: flex;
+  justify-content: center;
+}
+
+.config-modal__cancel {
+  background: transparent;
+  border: 1px solid var(--border-toolbar);
+  color: var(--btn-color-sub);
+  margin-right: 10px;
+  border-radius: 8px;
+  padding: 8px 14px;
+
+  font-size: 14px;
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.config-modal__cancel:hover {
+  background: var(--bg-toolbar);
+}
+
+.config-modal__apply {
+  background: var(--background-btn-active);
+  color: var(--btn-color-active);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.config-modal__apply:active {
+  transform: scale(0.97);
+}
+
+@keyframes modalIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
   }
 }

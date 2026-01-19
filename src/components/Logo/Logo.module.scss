@@ -25,7 +25,6 @@
     .logo__suffix {
       font-weight: vars.$font-weight-thin;
       font-size: vars.$font-size-lg;
-      color: vars.$neutral-400;
       text-transform: lowercase;
       transform: rotate(0deg);
     }
@@ -36,7 +35,6 @@
       font-family: vars.$font-baloo;
       font-weight: vars.$font-weight-bold;
       font-size: vars.$font-size-xl;
-      color: vars.$cyan-400;
       transform: rotate(-6deg) translateY(-2px);
 
       animation: bounceIn 0.5s ease;
@@ -55,5 +53,27 @@
   100% {
     transform: scale(1) rotate(-6deg);
     opacity: 1;
+  }
+}
+
+@media (max-width: 700px) {
+  .logo__brand {
+    font-size: vars.$font-size-xl;
+  }
+
+  .logo__suffix {
+    font-size: vars.$font-size-md;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    &__brand {
+      font-size: vars.$font-size-lg;
+    }
+
+    &__suffix {
+      font-size: vars.$font-size-sm;
+    }
   }
 }

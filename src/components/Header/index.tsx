@@ -6,7 +6,7 @@ import { ThemeToggle } from '../ThemeToggle';
 
 export const Header = ({ variant, personalBestWpm }: HeaderProps) => {
   const TYPE_THEMES = ['light', 'dark', 'sepia', 'sakura', 'vs code'];
-  const KIDS_THEMES = ['candy', 'dinosaur', 'space'];
+  const KIDS_THEMES = ['candy', 'minecraft', 'kitty', 'watermelon'];
 
   return (
     <header className={`${styles.header} ${styles[`header--${variant}`]}`}>
