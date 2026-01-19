@@ -63,7 +63,7 @@ The biggest technical challenge and achievement was the **Data Theme Implementat
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/mari-codes/dualtype-speed-game.git](https://github.com/mari-codes/bora-type.git)
+    git clone https://github.com/mari-codes/bora-type.git
     ```
 2.  **Install dependencies:**
     ```bash
@@ -75,6 +75,24 @@ The biggest technical challenge and achievement was the **Data Theme Implementat
     ```
 
 ---
+
+## Screenshots
+
+### Bora Home - Mobile
+
+![Bora mobile home](./src/assets/screenshots/bora-home.png)
+
+### Bora Kids Tablet
+![Bora Kids Tablet](./src/assets/screenshots/bora-kids-tablet.png)
+
+### Bora Kids Desktop
+
+![Bora Kids Desktop](./src/assets/screenshots/bora-kids.png)
+
+### Bora Type Desktop
+
+![Bora Type Desktop](./src/assets/screenshots/bora-type.png)
+
 
 ## Front End Mentor Hackathon
 This project was developed as a custom solution for the Type Speed Game challenge, focusing on UI versatility and clean code architecture.
