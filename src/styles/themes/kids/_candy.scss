@@ -39,7 +39,7 @@
   --shadow-popover: #{vars.$candy-shadow-lg};
   --text-ghost: #{vars.$candy-blue};
   --background-btn-color: #{vars.$candy-white};
-  --background-btn-border: #{vars.$radius-sm} solid #{vars.$candy-black};
+  --background-btn-border: 3px solid #{vars.$candy-black};
   --box-shadow-btn: 4px 4px 0px #{vars.$candy-black};
   --padding-btn-option: #{vars.$spacing-125} #{vars.$spacing-125};
   --border-btn-option: #{vars.$radius-lg};
