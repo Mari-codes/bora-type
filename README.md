@@ -1,73 +1,85 @@
-# React + TypeScript + Vite
+# Bora - Adaptive Typing Speed Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A comprehensive typing speed application built as a solution for a **Front End Mentor Hackathon**. This project delivers two entirely distinct user experiences: a minimalist, professional environment for adults and a vibrant, "Cartoon Pop" interface for kids.
 
-Currently, two official plugins are available:
+## The Solution
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The core concept was to create a tool that adapts to the user's personality and age group. I achieved this by leveraging a robust **theme-switching architecture**, allowing the entire UI—from fonts to button physics—to transform instantly.
 
-## React Compiler
+### Adult Mode (Minimalist & Focused)
+Designed for high productivity and concentration.
+- **Themes:** Light, Dark, Sepia, Sakura, and VS Code.
+- **Modes:** Standard, Quotes, Code, and Lyrics.
+- **Difficulty:** Easy, Medium, Hard.
+- **Time Options:** 15s, 30s, 60s, 120s, and Infinite (Progressive counter).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Kids Mode (Cartoon Pop Style)
+Designed to be playful, using Neo-Brutalism and vibrant animations.
+- **Themes:** Candy, Minecraft, Kitty, and Watermelon.
+- **Modes:** Standard, Quotes, and Lyrics.
+- **Difficulty:** Easy, Medium, Hard.
+- **Time Options:** 15s, 30s, 45s, 60s.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+##  Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* **Framework:** React 18 (Vite)
+* **Language:** TypeScript
+* **Styling:** SASS (SCSS) + CSS Modules
+* **Methodology:** BEM (Block Element Modifier)
+* **Icons:** Lucide-React
+* **Animation/Effects:** Canvas-Confetti & CSS Keyframes
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Key Features
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+* **Advanced Theming:** Deep use of `data-theme` attributes to swap global color palettes, border-radii, and shadows without page reloads.
+* **Local Persistence:** Personal Best (PB) records are tracked and saved in **Local Storage**, categorized by game mode and difficulty.
+* **Gamification:** A confetti celebration triggers whenever a user breaks their personal record.
+* **Responsive Layout:** Fully optimized for mobile, tablet, and desktop with custom breakpoints and fluid typography.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+
+---
+
+## Lessons Learned
+
+The biggest technical challenge and achievement was the **Data Theme Implementation**. 
+
+> "I learned how powerful `data-theme` can be when combined with CSS Variables. By structuring my SASS tokens to react to data attributes on the body, I could change the entire look and feel of the app—from the minimalist VS Code vibe to a chunky Minecraft style—using the exact same HTML logic. Managing state between two such different visual directions was a massive learning curve."
+
+### Main Challenges
+1.  **Logical Abstraction:** Keeping the typing engine identical while the UI changed drastically.
+2.  **Responsive Design:** Using complex media queries to ensure the "Split Home" layout worked on small mobile screens.
+3.  **WPM Accuracy:** Fine-tuning the Words Per Minute calculation and the "Personal Best" logic.
+
+
+
+---
+
+## Installation & Setup
+
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/mari-codes/dualtype-speed-game.git](https://github.com/mari-codes/bora-type.git)
+    ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+
+---
+
+## Front End Mentor Hackathon
+This project was developed as a custom solution for the Type Speed Game challenge, focusing on UI versatility and clean code architecture.
+
+## Author
+
+- Frontend Mentor - [@mari-codes](https://www.frontendmentor.io/profile/mari-codes)
+
