@@ -104,6 +104,7 @@
   --color-icon-theme: black;
   --fil-icon-theme: var(--accent-color);
   --btn-color-drop-active: #{vars.$candy-purple};
+  --icon-color-custom-dd: #{vars.$candy-pink};
 }
 
 [data-theme='minecraft'] {
@@ -182,7 +183,7 @@
   --modal-title-size: 36px;
   --modal-title-shadow: 3px 3px 0px #{vars.$minecraft-black};
   --modal-card-bg: #{vars.$minecraft-gray-light};
-  --modal-card-radius: 0px; // Quadrado
+  --modal-card-radius: 0px;
   --modal-card-border: 4px solid var(--border);
   --modal-card-shadow: 12px 12px 0px #{vars.$minecraft-black};
   --modal-stats-gap: 20px;
@@ -192,7 +193,7 @@
   --modal-value-shadow: 2px 2px 0px #{vars.$minecraft-white};
   --modal-btn-height: 54px;
   --modal-btn-border: 3px solid var(--border);
-  --modal-btn-radius: 0px; // Quadrado
+  --modal-btn-radius: 0px;
   --modal-btn-weight: 900;
   --timer-font-weight: 700;
   --timer-font-size: 56px;
@@ -207,6 +208,7 @@
   --color-icon-theme: black;
   --fil-icon-theme: var(--accent-color);
   --btn-color-drop-active: #{vars.$minecraft-white};
+  --icon-color-custom-dd: #{vars.$minecraft-black};
 }
 
 [data-theme='watermelon'] {
@@ -310,9 +312,10 @@
   --timer-font-size-md: 50px;
   --timer-font-size-sm: 40px;
   --timer-font-size-xs: 32px;
-  --color-icon-theme: black;
+  --color-icon-theme: #(vars.$watermelon-darker);
   --fil-icon-theme: var(--accent-color);
   --btn-color-drop-active: #{vars.$watermelon-pink};
+  --icon-color-custom-dd: #{vars.$watermelon-red};
 }
 
 [data-theme='kitty'] {
@@ -419,4 +422,5 @@
   --color-icon-theme: #{vars.$kitty-black};
   --fil-icon-theme: var(--accent-color);
   --btn-color-drop-active: #{vars.$kitty-light-pink};
+  --icon-color-custom-dd: #{vars.$kitty-red};
 }
