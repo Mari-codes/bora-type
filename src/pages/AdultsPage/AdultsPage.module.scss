@@ -5,7 +5,15 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden;
+
+  :global(button):focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    opacity: 1;
+    visibility: visible;
+    box-shadow: 0 0 0 4px rgba(var(--accent-rgb, 59, 130, 246), 0.4);
+  }
 
   &__toolbar {
     display: flex;
@@ -14,7 +22,7 @@
     padding: 50px 0;
     gap: 10px;
     position: relative;
-    z-index: 2;
+    z-index: 10;
   }
 
   &__config,
@@ -58,7 +66,7 @@
     min-height: 300px;
     width: 100%;
     position: relative;
-    z-index: 0;
+    z-index: 1;
   }
 
   &__label {
@@ -76,14 +84,15 @@
     align-items: center;
     justify-content: center;
     background: transparent;
-    margin: 0 auto;
+    margin: 20px auto 0;
     border: none;
     color: var(--btn-refresh);
     cursor: pointer;
     padding: 8px;
     border-radius: 4px;
     transition: all 0.2s ease-in-out;
-    outline: none;
+    position: relative;
+    z-index: 10;
 
     &:hover {
       color: var(--option-hover);
@@ -92,6 +101,10 @@
 
     &:focus-visible {
       color: var(--accent);
+      background: var(--bg-toolbar);
+      box-shadow: 0 0 0 3px rgba(var(--accent-rgb, 96, 165, 250), 0.3);
+      transform: rotate(-15deg) scale(1.1);
+      outline: none;
     }
   }
 
@@ -114,100 +127,14 @@
   &__modal-icon {
     width: 60px;
     height: 60px;
-  }
-
-  &__modal-icon--target {
-    color: var(--accent);
-  }
-
-  &__modal-icon--trophy {
-    color: var(--color-gold);
-  }
-
-  &__modal-icon--check-circle {
-    color: var(--text-secondary);
-  }
-}
-
-@media (max-width: 1126px) {
-  .adults-page {
-    padding: 20px;
-
-    &__toolbar {
-      flex-direction: row;
-      justify-content: center;
+    &--target {
+      color: var(--accent);
     }
-
-    &__config {
-      display: none;
+    &--trophy {
+      color: var(--color-gold);
     }
-
-    &__config-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .adults-page {
-    padding: 16px;
-
-    &__toolbar {
-      padding: 30px 0;
-      gap: 8px;
-    }
-
-    &__label {
-      font-size: 16px;
-    }
-
-    &__value {
-      font-size: 18px;
-    }
-  }
-}
-
-@media (max-width: 480px) {
-  .adults-page {
-    &__toolbar {
-      padding: 20px 0;
-    }
-
-    &__label {
-      font-size: 14px;
-    }
-
-    &__value {
-      font-size: 16px;
-    }
-
-    &__stats {
-      padding: 6px 12px;
-    }
-
-    &__stat {
-      &:not(:last-child) {
-        margin-right: 8px;
-        padding-right: 8px;
-
-        &::after {
-          height: 16px;
-        }
-      }
-    }
-
-    &__config-btn {
-      padding: 6px;
-    }
-  }
-}
-
-@media (max-width: 400px) {
-  .adults-page {
-    &__label {
-      font-size: 12px;
+    &--check-circle {
+      color: var(--text-secondary);
     }
   }
 }
@@ -216,127 +143,105 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  padding-top: 170px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-
   background: rgba(0, 0, 0, 0.4);
-
-  @media (max-width: 768px) {
-    padding-top: 130px;
-  }
-
-  @media (max-width: 480px) {
-    padding-top: 110px;
-  }
 }
 
 .config-modal {
   max-width: 420px;
-  width: 100%;
+  width: 90%;
   background: var(--background-body);
   border-radius: 16px;
   padding: 26px;
-
   animation: modalIn 0.2s ease-out;
 
-  @media (max-width: 768px) {
-    max-width: 320px;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    h3 {
+      font-size: 14px;
+      text-transform: uppercase;
+      color: var(--label);
+    }
+    button {
+      background: none;
+      border: none;
+      color: var(--btn-color-sub);
+      cursor: pointer;
+    }
   }
 
-  @media (max-width: 480px) {
-    max-width: 280px;
-    padding: 20px;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
 
-  @media (max-width: 400px) {
-    max-width: 240px;
-  }
-}
-
-.config-modal__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-
-  h3 {
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--label);
+  &__footer {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--divider-ui);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
   }
 
-  button {
-    background: none;
-    border: none;
-    color: var(--btn-color-sub);
+  &__cancel,
+  &__apply {
+    padding: 10px 20px;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+
+  &__cancel {
+    background: transparent;
+    border: 1px solid var(--border-toolbar);
+    color: var(--btn-color-sub);
+    &:hover {
+      background: var(--bg-toolbar);
+    }
+  }
+
+  &__apply {
+    background: var(--background-btn-active);
+    color: var(--btn-color-active);
+    border: none;
+    font-weight: 600;
+    &:active {
+      transform: scale(0.97);
+    }
   }
 }
 
-.config-modal__content {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.config-modal__footer {
-  margin-top: 16px;
-  padding-top: 12px;
-  border-top: 1px solid var(--divider-ui);
-  display: flex;
-  justify-content: center;
-}
-
-.config-modal__cancel {
-  background: transparent;
-  border: 1px solid var(--border-toolbar);
-  color: var(--btn-color-sub);
-  margin-right: 10px;
-  border-radius: 8px;
-  padding: 8px 14px;
-
-  font-size: 14px;
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
-}
-
-.config-modal__cancel:hover {
-  background: var(--bg-toolbar);
-}
-
-.config-modal__apply {
-  background: var(--background-btn-active);
-  color: var(--btn-color-active);
-  border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
-
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    transform 0.15s ease;
-}
-
-.config-modal__apply:active {
-  transform: scale(0.97);
+@media (max-width: 1126px) {
+  .adults-page {
+    padding: 20px;
+    &__toolbar {
+      flex-direction: row;
+      justify-content: center;
+    }
+    &__config {
+      display: none;
+    }
+    &__config-btn {
+      display: flex;
+    }
+  }
 }
 
 @keyframes modalIn {
   from {
-    transform: scale(0.95);
+    transform: translateY(10px);
     opacity: 0;
   }
   to {
-    transform: scale(1);
+    transform: translateY(0);
     opacity: 1;
   }
 }

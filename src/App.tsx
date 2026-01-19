@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import { AdultsPage } from './pages/AdultsPage';
 import { KidsPage } from './pages/KidsPage';
 

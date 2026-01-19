@@ -10,7 +10,6 @@ import type { KidsCategory, DifficultyLevels } from '../../types/gameTypes';
 import { usePersonalBest } from '../../hooks/usePersonalBest';
 import { useFocusRescue } from '../../hooks/useFocusRescue';
 import { useTypingGameLogic } from '../../hooks/useTypingGameLogic';
-import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import { useGameCompletion } from '../../hooks/useGameCompletion';
 import { kidsPassages } from '../../data/kidsContent';
 
@@ -22,7 +21,7 @@ export const KidsPage = () => {
   const [duration, setDuration] = useState<number>(30);
 
   useFocusRescue(game.handleNewText, game.isFinished);
-  useKeyboardShortcut('Tab', game.handleNewText);
+
   const { handleTimeUp } = useGameCompletion(
     game,
     personalBest,
@@ -150,7 +149,13 @@ export const KidsPage = () => {
       <button
         className={styles['kids-page__btn-refresh']}
         onClick={game.handleNewText}
-        aria-label="Restart"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            game.handleNewText();
+          }
+        }}
+        aria-label="Restart Game"
       >
         <RotateCcw className={styles['kids-page__btn-refresh-icon']} />
       </button>

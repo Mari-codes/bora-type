@@ -18,7 +18,6 @@ import type { Category } from '../../types/gameTypes';
 import { usePersonalBest } from '../../hooks/usePersonalBest';
 import { useFocusRescue } from '../../hooks/useFocusRescue';
 import { useTypingGameLogic } from '../../hooks/useTypingGameLogic';
-import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import { useGameCompletion } from '../../hooks/useGameCompletion';
 
 export const AdultsPage = () => {
@@ -30,17 +29,14 @@ export const AdultsPage = () => {
     'easy',
   );
   const [duration, setDuration] = useState<number | 'inf'>(30);
-
   const [tempCategory, setTempCategory] = useState<Category>(category);
   const [tempDifficulty, setTempDifficulty] = useState<
     'easy' | 'medium' | 'hard'
   >(difficulty);
   const [tempDuration, setTempDuration] = useState<number | 'inf'>(duration);
-
   const [isConfigOpen, setIsConfigOpen] = useState(false);
 
   useFocusRescue(game.handleNewText, game.isFinished);
-  useKeyboardShortcut('Tab', game.handleNewText);
 
   const { handleTimeUp } = useGameCompletion(
     game,
@@ -57,18 +53,21 @@ export const AdultsPage = () => {
     return list[Math.floor(Math.random() * list.length)].text;
   }, [category, difficulty, game.refreshSeed]);
 
+  const handleActionKeyDown = (e: React.KeyboardEvent, action: () => void) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      action();
+    }
+  };
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 1126 && isConfigOpen) {
         setIsConfigOpen(false);
       }
     };
-
     window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    return () => window.removeEventListener('resize', handleResize);
   }, [isConfigOpen]);
 
   useEffect(() => {
@@ -79,7 +78,6 @@ export const AdultsPage = () => {
 
   const modalContent = useMemo(() => {
     if (!game.isFinished) return null;
-
     if (game.isFirstTime) {
       return {
         title: 'Baseline Established!',
@@ -91,7 +89,6 @@ export const AdultsPage = () => {
         ),
       };
     }
-
     if (game.isNewRecord) {
       return {
         title: 'High Score Smashed!',
@@ -103,7 +100,6 @@ export const AdultsPage = () => {
         ),
       };
     }
-
     return {
       title: 'Test Completed!',
       description: 'Solid run.',
@@ -154,7 +150,6 @@ export const AdultsPage = () => {
               game.handleNewText();
             }}
           />
-
           <GameOption
             label="Difficulty"
             options={['easy', 'medium', 'hard']}
@@ -164,7 +159,6 @@ export const AdultsPage = () => {
               game.handleNewText();
             }}
           />
-
           <GameOption<number | 'inf'>
             label="Time"
             options={timeOptions}
@@ -178,12 +172,14 @@ export const AdultsPage = () => {
 
         <button
           className={styles['adults-page__config-btn']}
+          aria-label="Open Settings"
           onClick={() => {
             setTempCategory(category);
             setTempDifficulty(difficulty);
             setTempDuration(duration);
             setIsConfigOpen(true);
           }}
+          onKeyDown={(e) => handleActionKeyDown(e, () => setIsConfigOpen(true))}
         >
           <Settings size={20} />
         </button>
@@ -202,10 +198,11 @@ export const AdultsPage = () => {
           />
         )}
       </main>
-
       <button
         className={styles['adults-page__btn-refresh']}
+        aria-label="Restart Game"
         onClick={game.handleNewText}
+        onKeyDown={(e) => handleActionKeyDown(e, game.handleNewText)}
       >
         <RotateCcw size={24} />
       </button>
@@ -229,10 +226,18 @@ export const AdultsPage = () => {
           <div
             className={styles['config-modal']}
             onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
           >
             <header className={styles['config-modal__header']}>
               <h3>Settings</h3>
-              <button onClick={() => setIsConfigOpen(false)}>
+              <button
+                onClick={() => setIsConfigOpen(false)}
+                onKeyDown={(e) =>
+                  handleActionKeyDown(e, () => setIsConfigOpen(false))
+                }
+                aria-label="Close"
+              >
                 <X size={18} />
               </button>
             </header>
@@ -244,14 +249,12 @@ export const AdultsPage = () => {
                 currentValue={tempCategory}
                 onChange={(v) => setTempCategory(v as Category)}
               />
-
               <GameOption
                 label="Difficulty"
                 options={['easy', 'medium', 'hard']}
                 currentValue={tempDifficulty}
                 onChange={(v) => setTempDifficulty(v as any)}
               />
-
               <GameOption<number | 'inf'>
                 label="Time"
                 options={timeOptions}
@@ -264,6 +267,9 @@ export const AdultsPage = () => {
               <button
                 className={styles['config-modal__cancel']}
                 onClick={() => setIsConfigOpen(false)}
+                onKeyDown={(e) =>
+                  handleActionKeyDown(e, () => setIsConfigOpen(false))
+                }
               >
                 Cancel
               </button>
@@ -276,6 +282,15 @@ export const AdultsPage = () => {
                   game.handleNewText();
                   setIsConfigOpen(false);
                 }}
+                onKeyDown={(e) =>
+                  handleActionKeyDown(e, () => {
+                    setCategory(tempCategory);
+                    setDifficulty(tempDifficulty);
+                    setDuration(tempDuration);
+                    game.handleNewText();
+                    setIsConfigOpen(false);
+                  })
+                }
               >
                 Apply
               </button>
