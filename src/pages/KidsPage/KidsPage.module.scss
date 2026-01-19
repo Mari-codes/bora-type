@@ -1,13 +1,14 @@
 @use '../../styles/tokens' as vars;
 
 .kids-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: 30px 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-image: radial-gradient(vars.$candy-black 1px, transparent 0);
   background-size: 30px 30px;
+  overflow: hidden;
 
   :focus-visible {
     outline: 4px dashed vars.$candy-blue;
