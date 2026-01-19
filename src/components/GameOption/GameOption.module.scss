@@ -121,7 +121,7 @@
     &--active {
       color: var(--btn-color-active);
       background: var(--background-btn-active);
-      font-weight: 700;
+      font-weight: vars.$font-weight-bold;
     }
     @media (max-width: 480px) {
       font-size: 10px;
@@ -152,7 +152,7 @@
   &--active {
     background-color: var(--background-btn-active);
     color: var(--btn-color-active);
-    font-weight: 700;
+    font-weight: vars.$font-weight-bold;
     box-shadow: var(--box-shadow-btn-active);
 
     &::after {

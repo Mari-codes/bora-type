@@ -1,3 +1,5 @@
+@use '../../styles/tokens' as vars;
+
 .adults-page {
   padding: 30px 100px;
   min-height: 100vh;
@@ -235,7 +237,7 @@
     background: var(--background-btn-active);
     color: var(--btn-color-active);
     border: none;
-    font-weight: 600;
+    font-weight: vars.$font-weight-semibold;
     &:active {
       transform: scale(0.97);
     }
