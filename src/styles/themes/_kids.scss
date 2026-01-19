@@ -96,8 +96,6 @@
   --timer-text-stroke-width: 1.5px;
   --timer-text-stroke-color: #{vars.$candy-black};
   --timer-line-height: 1;
-
-  //
   --padding-btn-option-md: 6px 12px;
   --display-none: none;
   --timer-font-size-md: 50px;
@@ -313,6 +311,7 @@
   --timer-font-size-sm: 40px;
   --timer-font-size-xs: 32px;
   --color-icon-theme: black;
+  --fil-icon-theme: var(--accent-color);
   --btn-color-drop-active: #{vars.$watermelon-pink};
 }
 
@@ -417,6 +416,7 @@
   --timer-font-size-md: 50px;
   --timer-font-size-sm: 40px;
   --timer-font-size-xs: 32px;
-  --color-icon-theme: black;
+  --color-icon-theme: #{vars.$kitty-black};
+  --fil-icon-theme: var(--accent-color);
   --btn-color-drop-active: #{vars.$kitty-light-pink};
 }

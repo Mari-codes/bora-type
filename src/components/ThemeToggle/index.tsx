@@ -32,41 +32,46 @@ export function ThemeToggle({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handleKeyDown = (e: React.KeyboardEvent, action: () => void) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      action();
+    }
+  };
+
   return (
     <div className={styles.themeToggle} ref={dropdownRef}>
       <button
         type="button"
+        className={`${styles.themeToggle__trigger} ${isOpen ? styles['themeToggle__trigger--active'] : ''}`}
         onClick={() => setIsOpen(!isOpen)}
-        className={`
-          ${styles.themeToggle__trigger} 
-          ${isOpen ? styles['themeToggle__trigger--active'] : ''}
-        `}
+        onKeyDown={(e) => handleKeyDown(e, () => setIsOpen(!isOpen))}
       >
         <Paintbrush
           size={18}
           strokeWidth={2.5}
-          className={`
-    ${styles.themeToggle__icon} 
-    ${isOpen ? styles['themeToggle__icon--rotated'] : ''}
-  `}
+          className={`${styles.themeToggle__icon} ${isOpen ? styles['themeToggle__icon--rotated'] : ''}`}
         />
         <span className={styles.themeToggle__currentName}>{theme}</span>
       </button>
 
       {isOpen && (
-        <div className={styles.themeToggle__dropdown}>
+        <div className={styles.themeToggle__dropdown} role="listbox">
           {themes.map((t) => (
             <button
               type="button"
               key={t}
-              className={`
-                ${styles.themeToggle__option} 
-                ${theme === t ? styles['themeToggle__option--selected'] : ''}
-              `}
+              className={`${styles.themeToggle__option} ${theme === t ? styles['themeToggle__option--selected'] : ''}`}
               onClick={() => {
                 setTheme(t);
                 setIsOpen(false);
               }}
+              onKeyDown={(e) =>
+                handleKeyDown(e, () => {
+                  setTheme(t);
+                  setIsOpen(false);
+                })
+              }
             >
               {t}
               {theme === t && <div className={styles.themeToggle__dot} />}
