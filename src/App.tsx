@@ -13,7 +13,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/adults" element={<AdultsPage />} />
+        <Route path="/type" element={<AdultsPage />} />
         <Route path="/kids" element={<KidsPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
