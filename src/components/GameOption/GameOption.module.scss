@@ -87,8 +87,7 @@
 
   &__icon {
     transition: transform 0.2s ease;
-    opacity: 0.6;
-    color: var(--color-icon-theme);
+    color: var(--icon-color-custom-dd);
   }
 
   &--open &__icon {
@@ -113,17 +112,20 @@
     padding: 8px 12px;
     background: transparent;
     font-size: vars.$font-size-sm;
+    font-weight: 600;
     width: 100%;
     color: var(--btn-color-sub);
     cursor: pointer;
+    text-align: left;
 
     &:hover {
-      background: var(--background-btn-active);
-      color: var(--btn-color-active);
+      background: var(--dropddown-selected);
+      color: var(--btn-color-hover);
     }
 
     &--active {
-      color: var(--btn-color-drop-active);
+      color: var(--btn-color-active);
+      background: var(--background-btn-active);
       font-weight: 700;
     }
     @media (max-width: 480px) {
