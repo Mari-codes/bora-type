@@ -177,7 +177,7 @@
   }
 
   @media (max-width: 400px) {
-    max-width: 240px;
+    max-width: 250px;
   }
 
   &__header {
@@ -209,7 +209,7 @@
     padding-top: 16px;
     border-top: 1px solid var(--divider-ui);
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 12px;
   }
 
