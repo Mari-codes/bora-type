@@ -1,0 +1,56 @@
+.mode-switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  margin-left: auto;
+  width: fit-content;
+
+  &__label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    user-select: none;
+    font-weight: var(--font-weight);
+  }
+
+  &__track {
+    position: relative;
+    width: 64px;
+    height: 32px;
+    padding: 2px;
+
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--background-toggle);
+    cursor: pointer;
+
+    box-shadow: 2px 2px 0 var(--border);
+
+    display: flex;
+    align-items: center;
+  }
+
+  &__thumb {
+    width: 28px;
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: var(--background-body);
+
+    color: var(--text-primary);
+
+    box-shadow: 2px 2px 0 var(--border);
+
+    transform: translateX(0);
+    transition: transform 0.25s ease, color 0.2s ease;
+
+    &--kids {
+      transform: translateX(32px);
+      color: var(--accent-color);
+    }
+  }
+}

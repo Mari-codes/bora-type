@@ -19,6 +19,7 @@ import { usePersonalBest } from '../../hooks/usePersonalBest';
 import { useFocusRescue } from '../../hooks/useFocusRescue';
 import { useTypingGameLogic } from '../../hooks/useTypingGameLogic';
 import { useGameCompletion } from '../../hooks/useGameCompletion';
+import { ModeSelector } from '../../components/ModeSelector';
 
 export const AdultsPage = () => {
   const { personalBest, updatePersonalBest } = usePersonalBest('type');
@@ -206,7 +207,6 @@ export const AdultsPage = () => {
       >
         <RotateCcw size={24} />
       </button>
-
       {game.isFinished && modalContent && (
         <ResultsModal
           wpm={game.wpm}
@@ -298,6 +298,7 @@ export const AdultsPage = () => {
           </div>
         </div>
       )}
+      <ModeSelector />
     </div>
   );
 };

@@ -12,6 +12,7 @@ import { useFocusRescue } from '../../hooks/useFocusRescue';
 import { useTypingGameLogic } from '../../hooks/useTypingGameLogic';
 import { useGameCompletion } from '../../hooks/useGameCompletion';
 import { kidsPassages } from '../../data/kidsContent';
+import { ModeSelector } from '../../components/ModeSelector';
 
 export const KidsPage = () => {
   const { personalBest, updatePersonalBest } = usePersonalBest('kids');
@@ -172,6 +173,7 @@ export const KidsPage = () => {
           icon={modalContent.icon}
         />
       )}
+      <ModeSelector />
     </div>
   );
 };
