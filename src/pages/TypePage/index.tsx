@@ -7,14 +7,14 @@ import {
   Settings,
   X,
 } from 'lucide-react';
-import { adultPassages } from '../../data/adultContent';
-import styles from './AdultsPage.module.scss';
+import { typePassages } from '../../data/typeContent';
+import styles from './TypePage.module.scss';
 import { TypingGame } from '../../components/TypingGame';
 import { GameOption } from '../../components/GameOption';
 import Timer from '../../components/Timer';
 import { Header } from '../../components/Header';
 import { ResultsModal } from '../../components/ResultsModal';
-import type { Category } from '../../types/gameTypes';
+import type { Category, DifficultyLevels } from '../../types/gameTypes';
 import { usePersonalBest } from '../../hooks/usePersonalBest';
 import { useFocusRescue } from '../../hooks/useFocusRescue';
 import { useTypingGameLogic } from '../../hooks/useTypingGameLogic';
@@ -26,9 +26,7 @@ export const AdultsPage = () => {
   const game = useTypingGameLogic();
 
   const [category, setCategory] = useState<Category>('standard');
-  const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>(
-    'easy',
-  );
+  const [difficulty, setDifficulty] = useState<keyof DifficultyLevels>('easy');
   const [duration, setDuration] = useState<number | 'inf'>(30);
   const [tempCategory, setTempCategory] = useState<Category>(category);
   const [tempDifficulty, setTempDifficulty] = useState<
@@ -50,7 +48,7 @@ export const AdultsPage = () => {
   >(() => [15, 30, 60, 120, { value: 'inf', label: 'inf' }], []);
 
   const currentText = useMemo(() => {
-    const list = adultPassages[category][difficulty];
+    const list = typePassages[category][difficulty];
     return list[Math.floor(Math.random() * list.length)].text;
   }, [category, difficulty, game.refreshSeed]);
 
@@ -85,7 +83,7 @@ export const AdultsPage = () => {
         description: 'You’ve set the bar.',
         icon: (
           <Target
-            className={`${styles['adults-page__modal-icon']} ${styles['adults-page__modal-icon--target']}`}
+            className={`${styles['type-page__modal-icon']} ${styles['type-page__modal-icon--target']}`}
           />
         ),
       };
@@ -96,7 +94,7 @@ export const AdultsPage = () => {
         description: 'Faster than ever!',
         icon: (
           <Trophy
-            className={`${styles['adults-page__modal-icon']} ${styles['adults-page__modal-icon--trophy']}`}
+            className={`${styles['type-page__modal-icon']} ${styles['type-page__modal-icon--trophy']}`}
           />
         ),
       };
@@ -106,32 +104,32 @@ export const AdultsPage = () => {
       description: 'Solid run.',
       icon: (
         <CheckCircle2
-          className={`${styles['adults-page__modal-icon']} ${styles['adults-page__modal-icon--check-circle']}`}
+          className={`${styles['type-page__modal-icon']} ${styles['type-page__modal-icon--check-circle']}`}
         />
       ),
     };
   }, [game.isFinished, game.isNewRecord, game.isFirstTime]);
 
   return (
-    <div className={`${styles['adults-page']} adults-mode`}>
+    <div className={`${styles['type-page']} adults-mode`}>
       <Header variant="type" personalBestWpm={personalBest} />
 
-      <div className={styles['adults-page__toolbar']}>
-        <div className={styles['adults-page__stats']}>
-          <div className={styles['adults-page__stat']}>
-            <span className={styles['adults-page__label']}>WPM:</span>
-            <strong className={styles['adults-page__value']}>{game.wpm}</strong>
+      <div className={styles['type-page__toolbar']}>
+        <div className={styles['type-page__stats']}>
+          <div className={styles['type-page__stat']}>
+            <span className={styles['type-page__label']}>WPM:</span>
+            <strong className={styles['type-page__value']}>{game.wpm}</strong>
           </div>
 
-          <div className={styles['adults-page__stat']}>
-            <span className={styles['adults-page__label']}>Accuracy:</span>
-            <strong className={styles['adults-page__value']}>
+          <div className={styles['type-page__stat']}>
+            <span className={styles['type-page__label']}>Accuracy:</span>
+            <strong className={styles['type-page__value']}>
               {game.accuracy}%
             </strong>
           </div>
 
-          <div className={styles['adults-page__stat']}>
-            <span className={styles['adults-page__label']}>Time:</span>
+          <div className={styles['type-page__stat']}>
+            <span className={styles['type-page__label']}>Time:</span>
             <Timer
               key={game.timerKey}
               duration={duration === 'inf' ? 0 : duration}
@@ -141,22 +139,22 @@ export const AdultsPage = () => {
           </div>
         </div>
 
-        <nav className={styles['adults-page__config']}>
-          <GameOption
+        <nav className={styles['type-page__config']}>
+          <GameOption<Category>
             label="Mode"
             options={['standard', 'quotes', 'code', 'lyrics']}
             currentValue={category}
             onChange={(v) => {
-              setCategory(v as Category);
+              setCategory(v);
               game.handleNewText();
             }}
           />
-          <GameOption
+          <GameOption<keyof DifficultyLevels>
             label="Difficulty"
             options={['easy', 'medium', 'hard']}
             currentValue={difficulty}
             onChange={(v) => {
-              setDifficulty(v as any);
+              setDifficulty(v);
               game.handleNewText();
             }}
           />
@@ -172,7 +170,7 @@ export const AdultsPage = () => {
         </nav>
 
         <button
-          className={styles['adults-page__config-btn']}
+          className={styles['type-page__config-btn']}
           aria-label="Open Settings"
           onClick={() => {
             setTempCategory(category);
@@ -186,7 +184,7 @@ export const AdultsPage = () => {
         </button>
       </div>
 
-      <main className={styles['adults-page__main']}>
+      <main className={styles['type-page__main']}>
         {!game.isFinished && (
           <TypingGame
             key={`${category}-${difficulty}-${duration}-${game.refreshSeed}`}
@@ -200,7 +198,7 @@ export const AdultsPage = () => {
         )}
       </main>
       <button
-        className={styles['adults-page__btn-refresh']}
+        className={styles['type-page__btn-refresh']}
         aria-label="Restart Game"
         onClick={game.handleNewText}
         onKeyDown={(e) => handleActionKeyDown(e, game.handleNewText)}
@@ -243,17 +241,17 @@ export const AdultsPage = () => {
             </header>
 
             <div className={styles['config-modal__content']}>
-              <GameOption
+              <GameOption<Category>
                 label="Mode"
                 options={['standard', 'quotes', 'code', 'lyrics']}
                 currentValue={tempCategory}
-                onChange={(v) => setTempCategory(v as Category)}
+                onChange={(v) => setTempCategory(v)}
               />
-              <GameOption
+              <GameOption<keyof DifficultyLevels>
                 label="Difficulty"
                 options={['easy', 'medium', 'hard']}
                 currentValue={tempDifficulty}
-                onChange={(v) => setTempDifficulty(v as any)}
+                onChange={(v) => setTempDifficulty(v)}
               />
               <GameOption<number | 'inf'>
                 label="Time"

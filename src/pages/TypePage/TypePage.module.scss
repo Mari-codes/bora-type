@@ -1,6 +1,6 @@
 @use '../../styles/tokens' as vars;
 
-.adults-page {
+.type-page {
   padding: 30px 100px;
   min-height: 100vh;
   min-height: 100svh;
@@ -245,7 +245,7 @@
 }
 
 @media (max-width: 1126px) {
-  .adults-page {
+  .type-page {
     padding: 20px;
 
     &__toolbar {
@@ -266,7 +266,7 @@
 }
 
 @media (max-width: 768px) {
-  .adults-page {
+  .type-page {
     padding: 16px;
 
     &__toolbar {
@@ -285,7 +285,7 @@
 }
 
 @media (max-width: 480px) {
-  .adults-page {
+  .type-page {
     &__toolbar {
       padding: 20px 0;
     }
@@ -320,7 +320,7 @@
 }
 
 @media (max-width: 400px) {
-  .adults-page {
+  .type-page {
     &__label {
       font-size: 12px;
     }
