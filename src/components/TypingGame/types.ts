@@ -11,7 +11,7 @@ export interface TypingGameProps {
   }) => void;
   onComplete: (
     finalErrors: { index: number; expected: string; typed: string }[],
-  ) => void; // <- muda aqui
+  ) => void;
 
   onStart: () => void;
 }

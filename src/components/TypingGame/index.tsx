@@ -149,7 +149,7 @@ export const TypingGame = ({
         spellCheck={false}
         autoCorrect="off"
         autoCapitalize="off"
-        inputMode="none"
+        inputMode="text"
       />
 
       <TypingDisplay
