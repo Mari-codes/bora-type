@@ -102,7 +102,7 @@ export const KidsPage = () => {
         <nav className={styles['kids-page__config']}>
           <GameOption<KidsCategory>
             label="Mode:"
-            options={['standard', 'quotes', 'lyrics']}
+            options={['standard', 'quotes', 'lyrics', 'code']}
             currentValue={category}
             onChange={(v) => {
               setCategory(v);
@@ -110,22 +110,22 @@ export const KidsPage = () => {
             }}
             mode="kids"
           />
-          <GameOption
+          <GameOption<keyof DifficultyLevels>
             label="Level:"
             options={['easy', 'medium', 'hard']}
             currentValue={difficulty}
             onChange={(v) => {
-              setDifficulty(v as any);
+              setDifficulty(v);
               game.handleNewText();
             }}
             mode="kids"
           />
-          <GameOption
+          <GameOption<number>
             label="Timer:"
             options={timeOptions}
             currentValue={duration}
             onChange={(val) => {
-              setDuration(val as number);
+              setDuration(val);
               game.handleNewText();
             }}
             mode="kids"
