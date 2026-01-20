@@ -151,7 +151,7 @@ export const KidsPage = () => {
             </strong>
           </div>
           <div className={styles['kids-page__stat']}>
-            <span className={styles['kids-page__label']}>Timer:</span>
+            <span className={styles['kids-page__label']}>Time:</span>
             <Timer
               key={game.timerKey}
               duration={duration}
@@ -183,7 +183,7 @@ export const KidsPage = () => {
             mode="kids"
           />
           <GameOption<number>
-            label="Timer:"
+            label="Time:"
             options={timeOptions}
             currentValue={duration}
             onChange={(val) => {
