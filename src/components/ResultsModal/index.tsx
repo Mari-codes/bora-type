@@ -1,3 +1,4 @@
+import { Share2 } from 'lucide-react';
 import styles from './ResultsModal.module.scss';
 import type { ResultsModalProps } from './types';
 
@@ -10,7 +11,28 @@ export const ResultsModal = ({
   icon,
   title,
   description,
+  mode,
 }: ResultsModalProps) => {
+  const handleShare = () => {
+    const gameLink = 'https://bora-type.vercel.app/';
+    const star = '\u2B50';
+
+    const text =
+      mode === 'kids'
+        ? ` ${star}I played BoraKids!\nI scored ${wpm} WPM with ${accuracy}% accuracy! Correct: ${correct}, Mistakes: ${mistakes}.\nCan you beat my score? Try it here: ${gameLink}`
+        : `I just completed a Typing Test on Bora Type!\nResult: ${wpm} WPM, Accuracy: ${accuracy}%\nCorrect: ${correct}, Mistakes: ${mistakes}.\nChallenge yourself and see if you can do better: ${gameLink}`;
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'Meu resultado no Bora Type!',
+          text,
+        })
+        .catch(() => {});
+    } else {
+      navigator.clipboard.writeText(text);
+    }
+  };
+
   return (
     <div className={styles['results-modal']}>
       <div className={styles['results-modal__card']}>
@@ -34,7 +56,7 @@ export const ResultsModal = ({
           </div>
 
           <div className={styles['results-modal__item']}>
-            <span className={styles['results-modal__label']}>Characteres</span>
+            <span className={styles['results-modal__label']}>Characters</span>
             <strong
               className={`${styles['results-modal__chars']} ${styles['results-modal__value']}`}
             >
@@ -51,9 +73,20 @@ export const ResultsModal = ({
           </div>
         </div>
 
-        <button className={styles['results-modal__btn']} onClick={onRestart}>
-          Restart Test
-        </button>
+        <div className={styles['results-modal__actions']}>
+          <button
+            className={styles['results-modal__btn-primary']}
+            onClick={onRestart}
+          >
+            Restart Test
+          </button>
+          <button
+            className={styles['results-modal__btn-icon']}
+            onClick={handleShare}
+          >
+            <Share2 className={styles['results-modal__icon-small']} />
+          </button>
+        </div>
       </div>
     </div>
   );

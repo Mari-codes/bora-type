@@ -1,3 +1,5 @@
+import type { GameMode } from '../../types/gameTypes';
+
 export interface ResultsModalProps {
   wpm: number;
   accuracy: number;
@@ -7,4 +9,5 @@ export interface ResultsModalProps {
   icon?: React.ReactNode;
   title: string;
   description: string;
+  mode?: GameMode;
 }

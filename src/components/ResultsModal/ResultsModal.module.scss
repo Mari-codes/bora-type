@@ -152,8 +152,9 @@
     }
   }
 
-  &__btn {
-    max-width: 216px;
+  &__btn-primary {
+    min-width: 150px;
+    max-width: 200px;
     width: 100%;
     height: var(--modal-btn-height);
     border: var(--modal-btn-border);
@@ -170,6 +171,34 @@
     &:hover {
       background: var(--accent-color);
     }
+  }
+
+  &__btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+
+    &:hover {
+      background: var(--modal-btn-hover-bg);
+      transform: scale(1.1);
+      border-radius: 50%;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__icon-small {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
   }
 }
 
