@@ -36,41 +36,46 @@ export const TypingGame = ({
     if (fromClick) firstKeyIgnoredRef.current = true;
   };
 
-  useEffect(() => {
-    if (!hasStarted || isFinished || !startTimeRef.current) return;
+const wpmRef = useRef(0);
 
-    const interval = setInterval(() => {
-      const elapsedMs = Date.now() - startTimeRef.current!;
-      const elapsedMin = elapsedMs / 1000 / 60;
+useEffect(() => {
+  if (!hasStarted || isFinished || !startTimeRef.current) return;
 
-      if (elapsedMs < 2000) return;
+  const interval = setInterval(() => {
+    const elapsedMs = Date.now() - startTimeRef.current!;
+    const elapsedMin = elapsedMs / 1000 / 60;
 
-      const correct = currentInputRef.current
-        .split('')
-        .filter((c, i) => c === text[i]).length;
+    if (elapsedMs < 2000) return;
 
-      const wpm = Math.floor(correct / 5 / elapsedMin);
+    const correct = currentInputRef.current
+      .split('')
+      .filter((c, i) => c === text[i]).length;
 
-      const accuracy =
-        totalKeystrokesRef.current === 0
-          ? 100
-          : Math.floor(
-              ((totalKeystrokesRef.current - totalErrorsRef.current) /
-                totalKeystrokesRef.current) *
-                100,
-            );
+    const instantWpm = correct / 5 / elapsedMin;
 
-      onStatsUpdate({
-        wpm,
-        accuracy,
-        correct,
-        mistakes: totalErrorsRef.current,
-        active: true,
-      });
-    }, 100);
+    wpmRef.current = wpmRef.current * 0.7 + instantWpm * 0.3;
+    const wpm = Math.floor(wpmRef.current);
 
-    return () => clearInterval(interval);
-  }, [hasStarted, isFinished, onStatsUpdate, text]);
+    const accuracy =
+      totalKeystrokesRef.current === 0
+        ? 100
+        : Math.floor(
+            ((totalKeystrokesRef.current - totalErrorsRef.current) /
+              totalKeystrokesRef.current) *
+              100
+          );
+
+    onStatsUpdate({
+      wpm,
+      accuracy,
+      correct,
+      mistakes: totalErrorsRef.current,
+      active: true,
+    });
+  }, 100);
+
+  return () => clearInterval(interval);
+}, [hasStarted, isFinished, onStatsUpdate, text]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

@@ -19,7 +19,7 @@ export const ResultsModal = ({
 
     const text =
       mode === 'kids'
-        ? ` ${star}I played BoraKids!\nI scored ${wpm} WPM with ${accuracy}% accuracy! Correct: ${correct}, Mistakes: ${mistakes}.\nCan you beat my score? Try it here: ${gameLink}`
+        ? ` ${star}I played Bora kids!\nI scored ${wpm} WPM with ${accuracy}% accuracy! Correct: ${correct}, Mistakes: ${mistakes}.\nCan you beat my score? Try it here: ${gameLink}`
         : `I just completed a Typing Test on Bora Type!\nResult: ${wpm} WPM, Accuracy: ${accuracy}%\nCorrect: ${correct}, Mistakes: ${mistakes}.\nChallenge yourself and see if you can do better: ${gameLink}`;
     if (navigator.share) {
       navigator
