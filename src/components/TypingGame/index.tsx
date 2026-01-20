@@ -144,7 +144,11 @@ export const TypingGame = ({
         ref={inputRef}
         type="text"
         value={userInput}
-        onChange={() => {}}
+        onChange={(e) => {
+          const val = e.target.value;
+          currentInputRef.current = val;
+          setUserInput(val);
+        }}
         autoComplete="off"
         spellCheck={false}
         autoCorrect="off"
