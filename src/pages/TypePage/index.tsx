@@ -9,20 +9,18 @@ import {
 } from 'lucide-react';
 import { typePassages } from '../../data/typeContent';
 import styles from './TypePage.module.scss';
+import confetti from 'canvas-confetti';
 import { TypingGame } from '../../components/TypingGame';
 import { GameOption } from '../../components/GameOption';
 import Timer from '../../components/Timer';
 import { Header } from '../../components/Header';
 import { ResultsModal } from '../../components/ResultsModal';
 import type { Category, DifficultyLevels } from '../../types/gameTypes';
-import { usePersonalBest } from '../../hooks/usePersonalBest';
 import { useFocusRescue } from '../../hooks/useFocusRescue';
 import { useTypingGameLogic } from '../../hooks/useTypingGameLogic';
-import { useGameCompletion } from '../../hooks/useGameCompletion';
 import { ModeSelector } from '../../components/ModeSelector';
 
 export const AdultsPage = () => {
-  const { personalBest, updatePersonalBest } = usePersonalBest('type');
   const game = useTypingGameLogic();
 
   const [category, setCategory] = useState<Category>('standard');
@@ -37,11 +35,69 @@ export const AdultsPage = () => {
 
   useFocusRescue(game.handleNewText, game.isFinished);
 
-  const { handleTimeUp } = useGameCompletion(
-    game,
-    personalBest,
-    updatePersonalBest,
-  );
+  const handleTimeUp = () => {
+    if (game.isFinished) return;
+
+    const storageKey = 'typing-pb-type';
+    const savedPB = Number(localStorage.getItem(storageKey) || 0);
+
+    const isFirstTime = savedPB === 0;
+    const isNewRecord = game.wpm > savedPB;
+
+    if (isNewRecord) {
+      localStorage.setItem(storageKey, game.wpm.toString());
+    }
+
+    if (isNewRecord && !isFirstTime) {
+      const premiumColors = ['#FFD700', '#C0C0C0', '#E6BE8A', '#ffffff'];
+
+      const fire = (particleRatio: number, opts: any) => {
+        confetti({
+          ...opts,
+          colors: premiumColors,
+          shapes: ['circle', 'square'],
+          ticks: 500,
+          gravity: 0.4,
+          scalar: Math.random() * 0.3 + 0.8,
+          zIndex: 1100,
+          particleCount: Math.floor(150 * particleRatio),
+        });
+      };
+
+      fire(0.5, {
+        spread: 60,
+        startVelocity: 20,
+        origin: { x: 0.2, y: -0.1 },
+        angle: 280,
+      });
+      fire(0.5, {
+        spread: 60,
+        startVelocity: 20,
+        origin: { x: 0.8, y: -0.1 },
+        angle: 260,
+      });
+
+      setTimeout(() => {
+        confetti({
+          colors: premiumColors,
+          particleCount: 40,
+          origin: { x: 0.5, y: -0.2 },
+          gravity: 0.3,
+          startVelocity: 10,
+          ticks: 600,
+          zIndex: 1100,
+        });
+      }, 300);
+    }
+
+    if (isFirstTime) game.setIsFirstTime(true);
+    else if (isNewRecord) game.setIsNewRecord(true);
+
+    game.setIsActive(false);
+    game.setIsFinished(true);
+  };
+
+  const personalBest = Number(localStorage.getItem('typing-pb-type') || 0);
 
   const timeOptions = useMemo<
     (number | { value: number | 'inf'; label: React.ReactNode })[]
@@ -115,6 +171,7 @@ export const AdultsPage = () => {
   ) => {
     game.setFinalErrors(finalErrors);
     game.setIsFinished(true);
+    handleTimeUp();
   };
 
   return (
@@ -214,6 +271,7 @@ export const AdultsPage = () => {
       </button>
       {game.isFinished && modalContent && (
         <ResultsModal
+          mode="type"
           wpm={game.wpm}
           accuracy={game.accuracy}
           correct={game.correct}
