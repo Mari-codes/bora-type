@@ -36,7 +36,6 @@ export const TypingGame = ({
   };
 
   const wpmRef = useRef(0);
-
   useEffect(() => {
     if (!hasStarted || isFinished || !startTimeRef.current) return;
 
@@ -124,6 +123,30 @@ export const TypingGame = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isFinished, text, onComplete, isMobile]);
 
+  const handleMobileChange = (val: string) => {
+    currentInputRef.current = val;
+    setUserInput(val);
+
+    totalKeystrokesRef.current = val.length;
+    totalErrorsRef.current = val
+      .split('')
+      .reduce((acc, c, i) => (c !== text[i] ? acc + 1 : acc), 0);
+
+    if (val.length >= text.length) {
+      const finalErrors = [];
+      for (let i = 0; i < text.length; i++) {
+        if (val[i] !== text[i]) {
+          finalErrors.push({
+            index: i,
+            expected: text[i],
+            typed: val[i],
+          });
+        }
+      }
+      onComplete(finalErrors);
+    }
+  };
+
   return (
     <div
       className={`${styles['typing-game']} ${
@@ -142,12 +165,7 @@ export const TypingGame = ({
         ref={inputRef}
         type="text"
         value={userInput}
-        onChange={(e) => {
-          if (!isMobile) return;
-          const val = e.target.value;
-          currentInputRef.current = val;
-          setUserInput(val);
-        }}
+        onChange={(e) => isMobile && handleMobileChange(e.target.value)}
         autoComplete="off"
         spellCheck={false}
         autoCorrect="off"

@@ -16,7 +16,7 @@ import { useConfettiPB } from '../../hooks/useConfettiPB';
 export const KidsPage = () => {
   const game = useTypingGameLogic();
   const [category, setCategory] = useState<KidsCategory>('standard');
-  const [difficulty, setDifficulty] = useState<keyof DifficultyLevels>('easy');
+  const [difficulty, setDifficulty] = useState<keyof DifficultyLevels>('hard');
   const [duration, setDuration] = useState<number>(30);
 
   useFocusRescue(game.handleNewText, game.isFinished);
