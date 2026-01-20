@@ -3,7 +3,7 @@ import styles from './Timer.module.scss';
 import type { TimerProps } from './types';
 
 const Timer = ({ duration, isActive, onTimeUp }: TimerProps) => {
-  const isInfinite = duration === 0 || (duration as any) === 'inf';
+  const isInfinite = duration === 0 || duration === 'inf';
   const [timeLeft, setTimeLeft] = useState(isInfinite ? 0 : duration);
 
   const startTimeRef = useRef<number | null>(null);

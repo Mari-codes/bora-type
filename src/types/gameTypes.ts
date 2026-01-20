@@ -1,3 +1,9 @@
+export type GameMode = 'type' | 'kids';
+
+export type BaseCategory = 'standard' | 'quotes' | 'lyrics' | 'code';
+export type TypeCategory = BaseCategory;
+export type KidsCategory = BaseCategory;
+
 export interface Passage {
   id: string;
   text: string;
@@ -9,14 +15,11 @@ export interface DifficultyLevels {
   hard: Passage[];
 }
 
-export type AdultCategory = 'standard' | 'quotes' | 'lyrics' | 'code';
-export type KidsCategory = 'standard' | 'quotes' | 'lyrics' | 'code';
-
 export type GameData<C extends string> = {
   [key in C]: DifficultyLevels;
 };
 
-export type AdultData = GameData<AdultCategory>;
+export type TypeData = GameData<TypeCategory>;
 export type KidsData = GameData<KidsCategory>;
 
-export type Category = AdultCategory | KidsCategory;
+export type Category = TypeCategory | KidsCategory;

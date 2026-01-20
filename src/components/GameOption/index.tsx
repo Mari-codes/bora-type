@@ -8,7 +8,7 @@ export const GameOption = <T extends string | number>({
   currentValue,
   onChange,
   label,
-  mode = 'adults',
+  mode = 'type',
 }: GameOptionProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);

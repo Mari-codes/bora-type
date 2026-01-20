@@ -3,11 +3,9 @@ import styles from './Header.module.scss';
 import { Logo } from '../Logo';
 import type { HeaderProps } from './types';
 import { ThemeToggle } from '../ThemeToggle';
+import { TYPE_THEMES, KIDS_THEMES } from '../../constants/themes';
 
 export const Header = ({ variant, personalBestWpm }: HeaderProps) => {
-  const TYPE_THEMES = ['light', 'dark', 'sepia', 'sakura', 'vs code'];
-  const KIDS_THEMES = ['candy', 'minecraft', 'kitty', 'watermelon'];
-
   return (
     <header className={`${styles.header} ${styles[`header--${variant}`]}`}>
       <div className={styles.header__container}>
@@ -32,8 +30,8 @@ export const Header = ({ variant, personalBestWpm }: HeaderProps) => {
           </div>
 
           <ThemeToggle
-            themes={variant === 'type' ? TYPE_THEMES : KIDS_THEMES}
-            storageKey={variant === 'type' ? 'adult-theme' : 'kids-theme'}
+            themes={variant === 'type' ? [...TYPE_THEMES] : [...KIDS_THEMES]}
+            storageKey={variant === 'type' ? 'type-theme' : 'kids-theme'}
             defaultTheme={variant === 'type' ? 'dark' : 'candy'}
           />
         </div>

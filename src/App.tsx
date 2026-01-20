@@ -4,8 +4,8 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-import { Home } from './pages/Home'; // Importando a nova Home
-import { AdultsPage } from './pages/AdultsPage';
+import { Home } from './pages/Home';
+import { AdultsPage } from './pages/TypePage';
 import { KidsPage } from './pages/KidsPage';
 
 function App() {

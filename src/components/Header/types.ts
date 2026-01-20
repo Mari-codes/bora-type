@@ -1,4 +1,6 @@
+import type { GameMode } from '../../types/gameTypes';
+
 export interface HeaderProps {
-  variant: 'type' | 'kids';
+  variant: GameMode;
   personalBestWpm?: number;
 }

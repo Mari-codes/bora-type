@@ -1,5 +1,5 @@
 export interface TimerProps {
-  duration: number;
+  duration: number | 'inf';
   isActive: boolean;
   onTimeUp: () => void;
 }

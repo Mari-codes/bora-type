@@ -46,7 +46,9 @@
     box-shadow: 2px 2px 0 var(--border);
 
     transform: translateX(0);
-    transition: transform 0.25s ease, color 0.2s ease;
+    transition:
+      transform 0.25s ease,
+      color 0.2s ease;
 
     &--kids {
       transform: translateX(32px);
