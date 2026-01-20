@@ -442,7 +442,7 @@ export const typePassages: TypeData = {
       {
         id: 'l-e-1',
         text: "When I see your face, there's not a thing that I would change.",
-      }, 
+      },
       { id: 'l-e-2', text: 'Imagine all the people living life in peace.' },
       {
         id: 'l-e-3',
@@ -451,16 +451,16 @@ export const typePassages: TypeData = {
       {
         id: 'l-e-4',
         text: "Easy come, easy go, that's just how you live, oh.",
-      }, 
+      },
       { id: 'l-e-5', text: 'All you need is love, love is all you need.' },
-      { id: 'l-e-6', text: 'Tonight I just want to take you higher.' }, 
+      { id: 'l-e-6', text: 'Tonight I just want to take you higher.' },
       { id: 'l-e-7', text: "Don't stop believin', hold on to that feelin'." },
       { id: 'l-e-8', text: 'Every breath you take, every move you make.' },
       { id: 'l-e-9', text: 'Blackbird singing in the dead of night.' },
       {
         id: 'l-e-10',
         text: 'I should have bought you flowers and held your hand.',
-      }, 
+      },
       {
         id: 'l-e-11',
         text: 'I wanna dance with somebody, I wanna feel the heat with somebody.',
@@ -510,7 +510,7 @@ export const typePassages: TypeData = {
       {
         id: 'l-m-2',
         text: 'This hit, that ice cold, Michelle Pfeiffer, that white gold. This one for them hood girls, them good girls straight masterpieces.',
-      }, 
+      },
       {
         id: 'l-m-3',
         text: 'Every night in my dreams I see you, I feel you. That is how I know you go on. Far across the distance and spaces between us.',
@@ -526,7 +526,7 @@ export const typePassages: TypeData = {
       {
         id: 'l-m-6',
         text: "Talking to the moon, tryin' to get to you. In hopes you're on the other side talkin' to me too. Or am I a fool who sits alone talkin' to the moon?",
-      }, 
+      },
       {
         id: 'l-m-7',
         text: 'Under the pressure, under the sun, we are the ones who will never run away from the challenges that life throws our way every single day.',
@@ -558,7 +558,7 @@ export const typePassages: TypeData = {
       {
         id: 'l-m-14',
         text: "Give me your attention baby, I got to tell you a little something about yourself. You're wonderful, flawless, ooh you're a sexy lady.",
-      }, 
+      },
       {
         id: 'l-m-15',
         text: 'I never meant to cause you any sorrow. I never meant to cause you any pain. I only wanted to one time see you laughing. I only wanted to see you laughing in the purple rain.',
@@ -588,7 +588,7 @@ export const typePassages: TypeData = {
       {
         id: 'l-h-1',
         text: "Never had much faith in love or miracles, never wanna put my heart on the line. But swimming in your world is something spiritual. Every day I'm tortured by the charge of your design.",
-      }, 
+      },
       {
         id: 'l-h-2',
         text: 'On a dark desert highway, cool wind in my hair. Warm smell of colitas, rising up through the air. Up ahead in the distance, I saw a shimmering light. My head grew heavy and my sight grew dim.',
@@ -604,7 +604,7 @@ export const typePassages: TypeData = {
       {
         id: 'l-h-5',
         text: "Oh, her eyes, her eyes make the stars look like they're not shinin'. Her hair, her hair falls perfectly without her tryin'. She's so beautiful and I tell her everyday. Yeah, I know, I know when I compliment her she won't believe me.",
-      }, 
+      },
       {
         id: 'l-h-6',
         text: 'Welcome to the Hotel California. Such a lovely place, such a lovely face. Plenty of room at the Hotel California. Any time of year, you can find it here. Her mind is Tiffany-twisted, she got the Mercedes bends.',
@@ -616,7 +616,7 @@ export const typePassages: TypeData = {
       {
         id: 'l-h-8',
         text: "Leave your cares and your world behind. We're gonna step out on the moon tonight. Don't let your feet touch the ground. Just let your heart be the sound. Leave the world behind.",
-      }, 
+      },
       {
         id: 'l-h-9',
         text: "When you were here before, couldn't look you in the eye. You're just like an angel, your skin makes me cry. You float like a feather in a beautiful world. I wish I was special. You're so very special. But I'm a creep.",
@@ -628,7 +628,7 @@ export const typePassages: TypeData = {
       {
         id: 'l-h-11',
         text: "If you ever find yourself stuck in the middle of the sea, I'll sail the world to find you. If you ever find yourself lost in the dark and you can't see, I'll be the light to lead you. Find out what we're made of.",
-      }, 
+      },
       {
         id: 'l-h-12',
         text: "He said, son, can you play me a memory? I'm not really sure how it goes. But it's sad and it's sweet and I knew it complete when I wore a younger man's clothes. Sing us a song, you're the piano man. Sing us a song tonight.",

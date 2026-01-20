@@ -69,11 +69,12 @@ export const KidsPage = () => {
     };
   }, [game.isFinished, game.isNewRecord, game.isFirstTime]);
 
-  const handleTypingComplete = (finalErrors: { index: number; expected: string; typed: string }[]) => {
-  game.setFinalErrors(finalErrors); 
-  game.setIsFinished(true);
-};
-
+  const handleTypingComplete = (
+    finalErrors: { index: number; expected: string; typed: string }[],
+  ) => {
+    game.setFinalErrors(finalErrors);
+    game.setIsFinished(true);
+  };
 
   return (
     <div className={styles['kids-page']}>

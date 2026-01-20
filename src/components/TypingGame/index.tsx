@@ -19,18 +19,21 @@ export const TypingGame = ({
   const totalErrorsRef = useRef(0);
   const currentInputRef = useRef('');
   const firstKeyIgnoredRef = useRef(false);
-  
 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
-  const wakeUpGame = () => {
+  const wakeUpGame = (fromClick = false) => {
     if (hasStarted || isFinished) return;
+
     setHasStarted(true);
     startTimeRef.current = Date.now();
     onStart();
+
     setTimeout(() => inputRef.current?.focus(), 10);
+
+    if (fromClick) firstKeyIgnoredRef.current = true;
   };
 
   useEffect(() => {
@@ -52,7 +55,7 @@ export const TypingGame = ({
           : Math.floor(
               ((totalKeystrokesRef.current - totalErrorsRef.current) /
                 totalKeystrokesRef.current) *
-                100
+                100,
             );
 
       onStatsUpdate({
@@ -109,7 +112,7 @@ export const TypingGame = ({
             }
           }
 
-          onComplete(finalErrors); 
+          onComplete(finalErrors);
         }
       }
     };
@@ -121,7 +124,7 @@ export const TypingGame = ({
   return (
     <div
       className={`${styles['typing-game']} ${!hasStarted ? styles['typing-game--unfocused'] : ''}`}
-      onClick={wakeUpGame}
+      onClick={() => wakeUpGame(true)}
     >
       {!hasStarted && !isFinished && (
         <div className={styles['typing-game__focus-notice']}>
@@ -139,6 +142,7 @@ export const TypingGame = ({
         spellCheck={false}
         autoCorrect="off"
         autoCapitalize="off"
+        inputMode="none"
       />
 
       <TypingDisplay
