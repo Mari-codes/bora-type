@@ -11,6 +11,7 @@ export const useTypingGameLogic = () => {
   const [mistakes, setMistakes] = useState(0);
   const [isNewRecord, setIsNewRecord] = useState(false);
   const [isFirstTime, setIsFirstTime] = useState(false);
+  const [finalErrors, setFinalErrors] = useState<{ index: number; expected: string; typed: string }[]>([]);
 
   const handleNewText = useCallback(() => {
     setRefreshSeed((s) => s + 1);
@@ -23,6 +24,7 @@ export const useTypingGameLogic = () => {
     setIsFinished(false);
     setIsNewRecord(false);
     setIsFirstTime(false);
+    setFinalErrors([]);
   }, []);
 
   const handleStatsUpdate = useCallback((stats: any) => {
@@ -43,6 +45,8 @@ export const useTypingGameLogic = () => {
     isFirstTime,
     refreshSeed,
     timerKey,
+    finalErrors,
+    setFinalErrors,
     handleNewText,
     handleStatsUpdate,
     setIsActive,

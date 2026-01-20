@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import styles from './TypingGame.module.scss';
 import { TypingDisplay } from '../TypingDisplay';
 import type { TypingGameProps } from './types';
@@ -11,14 +11,15 @@ export const TypingGame = ({
   onComplete,
   onStart,
 }: TypingGameProps) => {
-  const [userInput, setUserInput] = useState('');
   const [hasStarted, setHasStarted] = useState(false);
-
-  const [totalKeystrokes, setTotalKeystrokes] = useState(0);
-  const [totalErrors, setTotalErrors] = useState(0);
-
+  const [userInput, setUserInput] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const startTimeRef = useRef<number | null>(null);
+  const totalKeystrokesRef = useRef(0);
+  const totalErrorsRef = useRef(0);
+  const currentInputRef = useRef('');
+  const firstKeyIgnoredRef = useRef(false);
+  
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -26,62 +27,11 @@ export const TypingGame = ({
 
   const wakeUpGame = () => {
     if (hasStarted || isFinished) return;
-
     setHasStarted(true);
     startTimeRef.current = Date.now();
     onStart();
-
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 10);
+    setTimeout(() => inputRef.current?.focus(), 10);
   };
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (isFinished) return;
-
-      if (
-        e.key === 'Tab' ||
-        e.ctrlKey ||
-        e.metaKey ||
-        e.key === 'Alt' ||
-        e.key === 'Shift'
-      ) {
-        return;
-      }
-
-      if (!hasStarted) {
-        e.preventDefault();
-        wakeUpGame();
-        setUserInput('');
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [hasStarted, isFinished]);
-
-  const correctChars = useMemo(() => {
-    let count = 0;
-    for (let i = 0; i < userInput.length; i++) {
-      const expected = text[i];
-      const typed = userInput[i];
-      if (!expected) continue;
-      if (typed === expected) count++;
-    }
-    return count;
-  }, [userInput, text]);
-
-  const mistakes = useMemo(() => {
-    let count = 0;
-    for (let i = 0; i < userInput.length; i++) {
-      const expected = text[i];
-      const typed = userInput[i];
-      if (!expected) continue;
-      if (typed !== expected) count++;
-    }
-    return count;
-  }, [userInput, text]);
 
   useEffect(() => {
     if (!hasStarted || isFinished || !startTimeRef.current) return;
@@ -90,67 +40,87 @@ export const TypingGame = ({
       const elapsedMs = Date.now() - startTimeRef.current!;
       const elapsedMin = Math.max(elapsedMs / 1000 / 60, 1 / 60);
 
-      const wpm = Math.floor(correctChars / 5 / elapsedMin);
+      const correct = currentInputRef.current
+        .split('')
+        .filter((c, i) => c === text[i]).length;
+
+      const wpm = Math.floor(correct / 5 / elapsedMin);
 
       const accuracy =
-        totalKeystrokes === 0
+        totalKeystrokesRef.current === 0
           ? 100
           : Math.floor(
-              ((totalKeystrokes - totalErrors) / totalKeystrokes) * 100,
+              ((totalKeystrokesRef.current - totalErrorsRef.current) /
+                totalKeystrokesRef.current) *
+                100
             );
 
       onStatsUpdate({
         wpm,
         accuracy,
-        correct: correctChars,
-        mistakes,
+        correct,
+        mistakes: totalErrorsRef.current,
         active: true,
       });
-    }, 250);
+    }, 100);
 
     return () => clearInterval(interval);
-  }, [
-    hasStarted,
-    isFinished,
-    correctChars,
-    mistakes,
-    totalKeystrokes,
-    totalErrors,
-    onStatsUpdate,
-  ]);
+  }, [hasStarted, isFinished, onStatsUpdate, text]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!hasStarted || isFinished) return;
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (isFinished) return;
 
-    const value = e.target.value;
+      if (['Tab', 'Shift', 'Alt'].includes(e.key) || e.ctrlKey || e.metaKey)
+        return;
 
-    if (value.length > userInput.length) {
-      const idx = value.length - 1;
-      const expected = text[idx];
-      const typed = value[idx];
+      if (!firstKeyIgnoredRef.current) {
+        wakeUpGame();
+        firstKeyIgnoredRef.current = true;
+        return;
+      }
 
-      if (expected) {
-        setTotalKeystrokes((k) => k + 1);
-        if (typed !== expected) {
-          setTotalErrors((e) => e + 1);
+      if (e.key === 'Backspace') {
+        currentInputRef.current = currentInputRef.current.slice(0, -1);
+        setUserInput(currentInputRef.current);
+        return;
+      }
+
+      if (e.key.length === 1) {
+        const idx = currentInputRef.current.length;
+        const expected = text[idx];
+        const typed = e.key;
+
+        totalKeystrokesRef.current += 1;
+        if (!expected || typed !== expected) totalErrorsRef.current += 1;
+
+        currentInputRef.current += typed;
+        setUserInput(currentInputRef.current);
+
+        if (currentInputRef.current.length >= text.length) {
+          const finalErrors = [];
+          for (let i = 0; i < text.length; i++) {
+            if (currentInputRef.current[i] !== text[i]) {
+              finalErrors.push({
+                index: i,
+                expected: text[i],
+                typed: currentInputRef.current[i],
+              });
+            }
+          }
+
+          onComplete(finalErrors); 
         }
       }
-    }
+    };
 
-    if (value.length <= text.length) {
-      setUserInput(value);
-    }
-
-    if (value.length === text.length && text.length > 0) {
-      onComplete();
-    }
-  };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isFinished, text, onComplete]);
 
   return (
     <div
-      className={`${styles['typing-game']} ${
-        !hasStarted ? styles['typing-game--unfocused'] : ''
-      }`}
+      className={`${styles['typing-game']} ${!hasStarted ? styles['typing-game--unfocused'] : ''}`}
       onClick={wakeUpGame}
     >
       {!hasStarted && !isFinished && (
@@ -160,13 +130,15 @@ export const TypingGame = ({
       )}
 
       <input
+        className={styles['typing-game__input']}
         ref={inputRef}
         type="text"
-        className={styles['typing-game__input']}
         value={userInput}
-        onChange={handleInputChange}
+        onChange={() => {}}
         autoComplete="off"
         spellCheck={false}
+        autoCorrect="off"
+        autoCapitalize="off"
       />
 
       <TypingDisplay

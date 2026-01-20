@@ -69,6 +69,12 @@ export const KidsPage = () => {
     };
   }, [game.isFinished, game.isNewRecord, game.isFirstTime]);
 
+  const handleTypingComplete = (finalErrors: { index: number; expected: string; typed: string }[]) => {
+  game.setFinalErrors(finalErrors); 
+  game.setIsFinished(true);
+};
+
+
   return (
     <div className={styles['kids-page']}>
       <Header variant="kids" personalBestWpm={personalBest} />
@@ -141,7 +147,7 @@ export const KidsPage = () => {
             category="kids"
             isFinished={game.isFinished}
             onStatsUpdate={game.handleStatsUpdate}
-            onComplete={handleTimeUp}
+            onComplete={handleTypingComplete}
             onStart={() => game.setIsActive(true)}
           />
         )}
@@ -166,7 +172,7 @@ export const KidsPage = () => {
           wpm={game.wpm}
           accuracy={game.accuracy}
           correct={game.correct}
-          mistakes={game.mistakes}
+          mistakes={game.finalErrors.length}
           onRestart={game.handleNewText}
           title={modalContent.title}
           description={modalContent.description}

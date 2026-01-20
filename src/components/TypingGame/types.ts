@@ -9,6 +9,7 @@ export interface TypingGameProps {
     accuracy: number;
     active: boolean;
   }) => void;
-  onComplete: () => void;
+   onComplete: (finalErrors: { index: number; expected: string; typed: string }[]) => void; // <- muda aqui
+
   onStart: () => void;
 }

@@ -110,6 +110,11 @@ export const AdultsPage = () => {
     };
   }, [game.isFinished, game.isNewRecord, game.isFirstTime]);
 
+    const handleTypingComplete = (finalErrors: { index: number; expected: string; typed: string }[]) => {
+  game.setFinalErrors(finalErrors); 
+  game.setIsFinished(true);
+};
+
   return (
     <div className={`${styles['type-page']} adults-mode`}>
       <Header variant="type" personalBestWpm={personalBest} />
@@ -192,7 +197,7 @@ export const AdultsPage = () => {
             category={category}
             isFinished={game.isFinished}
             onStatsUpdate={game.handleStatsUpdate}
-            onComplete={handleTimeUp}
+            onComplete={handleTypingComplete}
             onStart={() => game.setIsActive(true)}
           />
         )}
@@ -210,7 +215,7 @@ export const AdultsPage = () => {
           wpm={game.wpm}
           accuracy={game.accuracy}
           correct={game.correct}
-          mistakes={game.mistakes}
+          mistakes={game.finalErrors.length}
           onRestart={game.handleNewText}
           {...modalContent}
         />
