@@ -20,19 +20,18 @@ export const TypingGame = ({
   const currentInputRef = useRef('');
   const firstKeyIgnoredRef = useRef(false);
 
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
   const wakeUpGame = (fromClick = false) => {
     if (hasStarted || isFinished) return;
-
     setHasStarted(true);
     startTimeRef.current = Date.now();
     onStart();
-
     setTimeout(() => inputRef.current?.focus(), 10);
-
     if (fromClick) firstKeyIgnoredRef.current = true;
   };
 
@@ -43,16 +42,13 @@ export const TypingGame = ({
 
     const interval = setInterval(() => {
       const elapsedMs = Date.now() - startTimeRef.current!;
-      const elapsedMin = elapsedMs / 1000 / 60;
-
-      if (elapsedMs < 2000) return;
+      const elapsedMin = Math.max(elapsedMs / 1000 / 60, 1 / 60);
 
       const correct = currentInputRef.current
         .split('')
         .filter((c, i) => c === text[i]).length;
 
       const instantWpm = correct / 5 / elapsedMin;
-
       wpmRef.current = wpmRef.current * 0.7 + instantWpm * 0.3;
       const wpm = Math.floor(wpmRef.current);
 
@@ -78,9 +74,10 @@ export const TypingGame = ({
   }, [hasStarted, isFinished, onStatsUpdate, text]);
 
   useEffect(() => {
+    if (isMobile) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (isFinished) return;
-
       if (['Tab', 'Shift', 'Alt'].includes(e.key) || e.ctrlKey || e.metaKey)
         return;
 
@@ -118,7 +115,6 @@ export const TypingGame = ({
               });
             }
           }
-
           onComplete(finalErrors);
         }
       }
@@ -126,11 +122,13 @@ export const TypingGame = ({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isFinished, text, onComplete]);
+  }, [isFinished, text, onComplete, isMobile]);
 
   return (
     <div
-      className={`${styles['typing-game']} ${!hasStarted ? styles['typing-game--unfocused'] : ''}`}
+      className={`${styles['typing-game']} ${
+        !hasStarted ? styles['typing-game--unfocused'] : ''
+      }`}
       onClick={() => wakeUpGame(true)}
     >
       {!hasStarted && !isFinished && (
@@ -145,6 +143,7 @@ export const TypingGame = ({
         type="text"
         value={userInput}
         onChange={(e) => {
+          if (!isMobile) return;
           const val = e.target.value;
           currentInputRef.current = val;
           setUserInput(val);
