@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import { RotateCcw, Star, PartyPopper, Rocket } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import styles from './KidsPage.module.scss';
 import { TypingGame } from '../../components/TypingGame';
 import { GameOption } from '../../components/GameOption';
@@ -12,6 +11,7 @@ import { useFocusRescue } from '../../hooks/useFocusRescue';
 import { useTypingGameLogic } from '../../hooks/useTypingGameLogic';
 import { kidsPassages } from '../../data/kidsContent';
 import { ModeSelector } from '../../components/ModeSelector';
+import { useConfettiPB } from '../../hooks/useConfettiPB';
 
 export const KidsPage = () => {
   const game = useTypingGameLogic();
@@ -21,69 +21,19 @@ export const KidsPage = () => {
 
   useFocusRescue(game.handleNewText, game.isFinished);
 
+  const { handlePB, personalBest } = useConfettiPB({
+    currentValue: game.wpm,
+    storageKey: 'typing-pb-kids',
+    onFirstTime: () => game.setIsFirstTime(true),
+    onNewRecord: () => game.setIsNewRecord(true),
+  });
+
   const handleTimeUp = () => {
     if (game.isFinished) return;
-
-    const storageKey = 'typing-pb-kids';
-    const savedPB = Number(localStorage.getItem(storageKey) || 0);
-
-    const isFirstTime = savedPB === 0;
-    const isNewRecord = game.wpm > savedPB;
-
-    if (isNewRecord) {
-      localStorage.setItem(storageKey, game.wpm.toString());
-    }
-
-    if (isNewRecord && !isFirstTime) {
-      const premiumColors = ['#FFD700', '#C0C0C0', '#E6BE8A', '#ffffff'];
-
-      const fire = (particleRatio: number, opts: any) => {
-        confetti({
-          ...opts,
-          colors: premiumColors,
-          shapes: ['circle', 'square'],
-          ticks: 500,
-          gravity: 0.4,
-          scalar: Math.random() * 0.3 + 0.8,
-          zIndex: 1100,
-          particleCount: Math.floor(150 * particleRatio),
-        });
-      };
-
-      fire(0.5, {
-        spread: 60,
-        startVelocity: 20,
-        origin: { x: 0.2, y: -0.1 },
-        angle: 280,
-      });
-      fire(0.5, {
-        spread: 60,
-        startVelocity: 20,
-        origin: { x: 0.8, y: -0.1 },
-        angle: 260,
-      });
-
-      setTimeout(() => {
-        confetti({
-          colors: premiumColors,
-          particleCount: 40,
-          origin: { x: 0.5, y: -0.2 },
-          gravity: 0.3,
-          startVelocity: 10,
-          ticks: 600,
-          zIndex: 1100,
-        });
-      }, 300);
-    }
-
-    if (isFirstTime) game.setIsFirstTime(true);
-    else if (isNewRecord) game.setIsNewRecord(true);
-
+    handlePB();
     game.setIsActive(false);
     game.setIsFinished(true);
   };
-
-  const personalBest = Number(localStorage.getItem('typing-pb-kids') || 0);
 
   const timeOptions = useMemo(() => [15, 30, 45, 60], []);
 
