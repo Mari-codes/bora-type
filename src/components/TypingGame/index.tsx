@@ -41,7 +41,9 @@ export const TypingGame = ({
 
     const interval = setInterval(() => {
       const elapsedMs = Date.now() - startTimeRef.current!;
-      const elapsedMin = Math.max(elapsedMs / 1000 / 60, 1 / 60);
+      const elapsedMin = elapsedMs / 1000 / 60;
+
+      if (elapsedMs < 2000) return;
 
       const correct = currentInputRef.current
         .split('')
