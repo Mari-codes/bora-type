@@ -6,6 +6,9 @@
 
 A comprehensive typing speed application built as a solution for a **Front End Mentor Hackathon**. This project delivers two entirely distinct user experiences: a minimalist, professional environment for adults and a vibrant, "Cartoon Pop" interface for kids.
 
+> **International Frontend Mentor Hackathon Project**  
+> Selected as a **Top 5 finalist** by the Frontend Mentor founder and team and finished in **2nd place** after a community vote.
+
 > **Why "Bora"?**  
 > "Bora" is a common Brazilian expression that roughly means "Let's go!" or "Come on!". It captures the energy and motivation behind this typing game. Encouraging users to jump in, have fun, and improve their typing speed. ;)
 
@@ -60,7 +63,7 @@ Designed to be playful, using Neo-Brutalism.
 
 The biggest technical challenge and achievement was the **Data Theme Implementation**. 
 
-> "I learned how powerful `data-theme` can be when combined with CSS Variables. By structuring my SASS tokens to react to data attributes on the body, I could change the entire look and feel of the app—from the minimalist VS Code vibe to a chunky Minecraft style. Using the exact same HTML logic. Managing state between two such different visual directions was a massive learning curve."
+> “I learned how powerful using data-theme with CSS Variables can be. By structuring my SASS tokens to react to data attributes on the body, I was able to completely change the look and feel of the app, from a minimalist VS Code–inspired style to a more playful Minecraft-like one, while keeping the same component structure and markup. The main challenge was managing state across two very different visual directions.”
 
 ### Main Challenges
 1.  **Logical Abstraction:** Keeping the typing engine identical while the UI changed drastically.

@@ -6,6 +6,10 @@
 
 Um aplicativo completo de velocidade de digitação, desenvolvido como solução para um **Front End Mentor Hackathon**. Este projeto oferece duas experiências de usuário totalmente distintas: um ambiente minimalista e profissional para adultos e uma interface vibrante, em estilo "Cartoon Pop", para crianças.
 
+> **Projeto desenvolvido para o Hackathon Internacional do Frontend Mentor**  
+> Selecionado como **Top 5 finalista** pelo fundador e pela equipe do Frontend Mentor e classificado em **2º lugar** após votação da comunidade.
+
+
 > **Por que "Bora"?**  
 > "Bora" é uma expressão muito usada por nós, e para este hackathon internacional caiu super bem. Ela transmite energia e motivação, incentivando os usuários a começarem, se divertirem e melhorarem sua velocidade de digitação. E aí, bora? ;)
 
@@ -59,7 +63,7 @@ Projetado para ser divertido, usando Neo-Brutalismo.
 
 O maior desafio técnico e conquista foi a **Implementação do Data Theme**.  
 
-> "Aprendi como o `data-theme` é poderoso quando combinado com variáveis CSS. Estruturando meus tokens SCSS para reagir aos atributos `data-theme` no body, pude mudar toda a aparência do app — do minimalista VS Code ao estilo robusto do Minecraft — usando a mesma lógica de HTML. Gerenciar o estado entre duas direções visuais tão diferentes foi uma curva de aprendizado enorme."
+> "Aprendi como o uso de data-theme em conjunto com CSS Variables pode ser muito poderoso. Ao organizar os tokens de SASS para reagirem a atributos no body, consegui mudar completamente a aparência da aplicação, do visual minimalista inspirado no VS Code para um estilo mais robusto como o Minecraft, mantendo a mesma estrutura de componentes e markup. O maior aprendizado foi gerenciar o estado entre duas direções visuais tão diferentes."
 
 ### Principais Desafios
 1. **Abstração Lógica:** Manter o motor de digitação idêntico enquanto a UI mudava drasticamente.
